@@ -3,5 +3,7 @@
 
 __attribute__((weak, noreturn)) void abort(void)
 {
-	_Exit(ENOTSUP);
+    while(1){
+        __asm__("bkpt 255");
+    }
 }

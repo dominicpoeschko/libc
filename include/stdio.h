@@ -1,7 +1,7 @@
 #ifndef STDIO_H__
 #define STDIO_H__
 
-#include <printf/printf.h>
+//#include <printf/printf.h>
 #include <stdarg.h>
 #include <stddef.h>
 #include <wctype.h> //TODO: eliminate need for this header here (refactor types?)
@@ -68,6 +68,9 @@ typedef struct __sFILE_fake FILE;
 #define _putchar(c) putchar_(c)
 
 #pragma mark - Supported Functions -
+
+extern FILE* stdout;
+extern FILE* stderr;
 
 /// Requires a definition of putchar_() for your platform
 int putchar(int c);
