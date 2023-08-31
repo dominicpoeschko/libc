@@ -11,6 +11,12 @@ set(
   src/ctype/isdigit.c
 )
 
+set(libc_flags
+    -Wno-unsafe-buffer-usage)
+
+list(JOIN libc_flags " " LIBC_FLAGS)
+
 list(TRANSFORM LIBC_SOURCE_FILES PREPEND "${CMAKE_CURRENT_LIST_DIR}/")
 
-set_source_files_properties(${LIBC_SOURCE_FILES} PROPERTIES COMPILE_FLAGS "")
+set_source_files_properties(
+  ${LIBC_SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${LIBC_FLAGS}")
