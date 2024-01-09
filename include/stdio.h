@@ -86,7 +86,14 @@ int vasprintf(char**, const char*, __isoc_va_list);
 #ifndef DISABLE_UNIMPLEMENTED_LIBC_APIS
 
 int fseek(FILE*, long, int);
+int fseeko(FILE*, int, int);
+
+#define SEEK_END 0
+#define SEEK_SET 1
+#define SEEK_CUR 2
+
 long ftell(FILE*);
+long ftello(FILE*);
 void rewind(FILE*);
 
 int fgetpos(FILE* __restrict, fpos_t* __restrict);
@@ -129,6 +136,7 @@ int fputs(const char* __restrict, FILE* __restrict);
 
 FILE* fopen(const char* __restrict, const char* __restrict);
 FILE* freopen(const char* __restrict, const char* __restrict, FILE* __restrict);
+FILE* fdopen(int, char const* __restrict);
 int fclose(FILE*);
 
 int feof(FILE*);
@@ -167,6 +175,9 @@ int swprintf(wchar_t* __restrict, size_t, const wchar_t* __restrict, ...);
 int vwprintf(const wchar_t* __restrict, __isoc_va_list);
 int vfwprintf(FILE* __restrict, const wchar_t* __restrict, __isoc_va_list);
 int vswprintf(wchar_t* __restrict, size_t, const wchar_t* __restrict, __isoc_va_list);
+int vsnprintf(char* __restrict, size_t, const char* __restrict, va_list);
+int snprintf(char* __restrict, size_t, const char* __restrict, ...);
+
 #endif
 
 #ifdef __cplusplus

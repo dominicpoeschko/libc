@@ -7,13 +7,15 @@ extern "C" {
 
 // TODO: documnentation
 
-#define LC_CTYPE 0
-#define LC_NUMERIC 1
-#define LC_TIME 2
-#define LC_COLLATE 3
-#define LC_MONETARY 4
-#define LC_MESSAGES 5
-#define LC_ALL 6
+#define LC_COLLATE_MASK         1
+#define LC_CTYPE_MASK           2
+#define LC_MESSAGES_MASK        4
+#define LC_MONETARY_MASK        8
+#define LC_NUMERIC_MASK         16
+#define LC_TIME_MASK            32
+#define LC_ALL_MASK             (LC_COLLATE_MASK | LC_CTYPE_MASK | \
+                                 LC_MESSAGES_MASK | LC_MONETARY_MASK |\
+                                 LC_NUMERIC_MASK | LC_TIME_MASK)
 
 struct lconv
 {
@@ -44,10 +46,29 @@ struct lconv
 	char int_n_sign_posn;
 };
 
+typedef int locale_t;
+
 #ifndef DISABLE_UNIMPLEMENTED_LIBC_APIS
 char* setlocale(int, const char*);
 struct lconv* localeconv(void);
+locale_t uselocale(locale_t);
+int isxdigit_l(int c, locale_t locale);
+int isdigit_l(int c, locale_t locale);
+int strcoll_l(const char *__s1, const char *__s2, locale_t locale);
+unsigned long long strtoull_l(const char *__nptr, char **__endptr,
+    int __base, locale_t locale);
+long long strtoll_l(const char *__nptr, char **__endptr,
+    int __base, locale_t locale);
+double
+strtod_l(const char * nptr, char ** endptr, locale_t locale);
+
+float
+strtof_l(const char *  nptr, char ** endptr, locale_t locale);
+
+long double
+strtold_l(const char * nptr, char ** endptr, locale_t locale);
 #endif
+
 
 #ifdef __cplusplus
 }
