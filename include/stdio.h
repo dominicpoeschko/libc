@@ -85,6 +85,30 @@ int vasprintf(char**, const char*, __isoc_va_list);
 
 #ifndef DISABLE_UNIMPLEMENTED_LIBC_APIS
 
+int getc_unlocked(FILE *);
+int getchar_unlocked(void);
+int putc_unlocked(int, FILE *);
+int putchar_unlocked(int);
+
+void clearerr_unlocked(FILE *);
+int feof_unlocked(FILE *);
+int ferror_unlocked(FILE *);
+int fileno_unlocked(FILE *);
+int fflush_unlocked(FILE *);
+int fgetc_unlocked(FILE *);
+int fputc_unlocked(int, FILE *);
+size_t fread_unlocked(void *, size_t, size_t,
+                      FILE *);
+size_t fwrite_unlocked(const void *, size_t, size_t,
+                      FILE *);
+
+char *fgets_unlocked(char *, int, FILE *);
+int fputs_unlocked(const char *, FILE *);
+
+void flockfile(FILE *);
+int ftrylockfile(FILE *);
+void funlockfile(FILE *);
+
 int fseek(FILE*, long, int);
 int fseeko(FILE*, int, int);
 
