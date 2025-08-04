@@ -1,36 +1,24 @@
-#ifndef __SETJMP_H_
-#define __SETJMP_H_
+//===-- C standard library header setjmp.h --------------------------------===//
+//
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+//
+//===----------------------------------------------------------------------===//
 
-#include <_types/_setjmp.h>
+#ifndef LLVM_LIBC_SETJMP_H
+#define LLVM_LIBC_SETJMP_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif
+#include "__llvm-libc-common.h"
 
-typedef struct __jmp_buf_tag
-{
-	__jmp_buf __jb;
-	unsigned long __fl;
-	unsigned long __ss[128 / sizeof(long)];
-} jmp_buf[1];
+#include <llvm-libc-types/jmp_buf.h>
 
-typedef jmp_buf sigjmp_buf;
+__BEGIN_C_DECLS
 
-#ifndef DISABLE_UNIMPLEMENTED_LIBC_APIS
-int sigsetjmp(sigjmp_buf, int);
-void siglongjmp(sigjmp_buf, int) __attribute__((noreturn));
-#endif
+_Noreturn void longjmp(jmp_buf, int) __NOEXCEPT;
 
-#ifndef DISABLE_UNIMPLEMENTED_LIBC_APIS
-int _setjmp(jmp_buf);
-int setjmp(jmp_buf);
+int setjmp(jmp_buf) __NOEXCEPT;
 
-void _longjmp(jmp_buf, int) __attribute__((noreturn));
-void longjmp(jmp_buf, int) __attribute__((noreturn));
-#endif
+__END_C_DECLS
 
-#ifdef __cplusplus
-}
-#endif
-
-#endif // __SETJMP_H_
+#endif // LLVM_LIBC_SETJMP_H

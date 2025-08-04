@@ -1,54 +1,34 @@
-#ifndef STRINGS_H_
-#define STRINGS_H_
+//===-- C standard library header strings.h -------------------------------===//
+//
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+//
+//===----------------------------------------------------------------------===//
 
-#include <stddef.h>
-#include <stdint.h>
+#ifndef LLVM_LIBC_STRINGS_H
+#define LLVM_LIBC_STRINGS_H
 
-#ifdef __cplusplus
-extern "C" {
-#endif //__cplusplus
+#include "__llvm-libc-common.h"
 
-/**
- * @brief Finds the last (most significant) bit set in the given mask
- *
- * Finds the last (most significant) bit set in the given (int) mask and return the index of that
- * bit.
- *
- * Bits are numbered starting at 1, the least significant bit.
- *
- * @param mask The bit mask
- * @return The index of the bit if mask is not zero, 0 otherwise.
- * */
-int fls(int mask);
+#include <llvm-libc-types/size_t.h>
 
-/**
- * @brief Finds the last (most significant) bit set in the given mask
- *
- * Finds the last (most significant) bit set in the given (long) mask and return the index of that
- * bit.
- *
- * Bits are numbered starting at 1, the least significant bit.
- *
- * @param mask The bit mask
- * @return The index of the bit if mask is not zero, 0 otherwise.
- * */
-int flsl(long mask);
+__BEGIN_C_DECLS
 
-/**
- * @brief Finds the last (most significant) bit set in the given mask
- *
- * Finds the last (most significant) bit set in the given (long long) mask and return the index of
- * that bit.
- *
- * Bits are numbered starting at 1, the least significant bit.
- *
- * @param mask The bit mask
- * @return The index of the bit if mask is not zero, 0 otherwise.
- * */
-int flsll(long long mask);
+int bcmp(const void *, const void *, size_t) __NOEXCEPT;
 
-#ifdef __cplusplus
-}
-#endif //__cplusplus
+void bcopy(const void *, void *, size_t) __NOEXCEPT;
 
-#endif // STRINGS_H_
+void bzero(void *, size_t) __NOEXCEPT;
+
+char * index(const char *, int) __NOEXCEPT;
+
+char * rindex(const char *, int) __NOEXCEPT;
+
+int strcasecmp(const char *, const char *) __NOEXCEPT;
+
+int strncasecmp(const char *, const char *, size_t) __NOEXCEPT;
+
+__END_C_DECLS
+
+#endif // LLVM_LIBC_STRINGS_H

@@ -1,15 +1,20 @@
-#ifndef STRCHRNUL_H__
-#define STRCHRNUL_H__
+//===-- Implementation header for strchrnul --------------------*- C++ -*-===//
+//
+// Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
+// See https://llvm.org/LICENSE.txt for license information.
+// SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
+//
+//===----------------------------------------------------------------------===//
 
-#ifdef __cplusplus
-extern "C" {
-#endif //__cplusplus
+#ifndef LLVM_LIBC_SRC_STRING_STRCHRNUL_H
+#define LLVM_LIBC_SRC_STRING_STRCHRNUL_H
 
-// TODO: document
-char* __strchrnul(const char* s, int c);
+#include "src/__support/macros/config.h"
 
-#ifdef __cplusplus
-}
-#endif //__cplusplus
+namespace LIBC_NAMESPACE_DECL {
 
-#endif // STRCHRNUL_H__
+char *strchrnul(const char *src, int c);
+
+} // namespace LIBC_NAMESPACE_DECL
+
+#endif // LLVM_LIBC_SRC_STRING_STRCHRNUL_H
