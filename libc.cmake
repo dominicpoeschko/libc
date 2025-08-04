@@ -1,6 +1,8 @@
 set(
   LIBC_SOURCE_FILES
   src/string/memcpy.cpp
+  src/string/memset.cpp
+  src/string/strlen.cpp
 )
 
 set(libc_flags
