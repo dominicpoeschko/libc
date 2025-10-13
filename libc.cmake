@@ -1,4 +1,12 @@
-set(LIBC_SOURCE_FILES src/string/memcpy.cpp src/string/memmove.cpp src/string/memset.cpp src/string/strlen.cpp)
+set(LIBC_SOURCE_FILES
+    src/string/memcpy.cpp
+    src/string/memmove.cpp
+    src/string/memset.cpp
+    src/string/strlen.cpp
+    src/math/generic/sinf.cpp
+    src/math/generic/fmodf.cpp
+    src/math/generic/fmaf.cpp
+    src/math/generic/fma.cpp)
 
 set(libc_flags -DLIBC_COPT_PUBLIC_PACKAGING)
 

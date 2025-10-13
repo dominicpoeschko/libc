@@ -90,8 +90,8 @@ LIBC_INLINE int raise_except_if_required(int excepts) {
 }
 
 LIBC_INLINE void set_errno_if_required(int err) {
-  if (math_errhandling & MATH_ERRNO)
-    libc_errno = err;
+  //if (math_errhandling & MATH_ERRNO)
+  //  libc_errno = err;
 }
 
 } // namespace fputil
