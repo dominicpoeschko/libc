@@ -1,1 +1,1 @@
-stipped-down version of https://github.com/embeddedartistry/libc   
+copy of llvm libc

@@ -15,16 +15,18 @@
 
 #include <stdarg.h>
 
+#include "llvm-libc-macros/null-macro.h"
+#include "llvm-libc-types/FILE.h"
+#include "llvm-libc-types/cookie_io_functions_t.h"
+#include "llvm-libc-types/off_t.h"
+#include "llvm-libc-types/size_t.h"
+#include <stdarg.h>
+
 #define stdout stdout
 
 #define stdin stdin
 
 #define stderr stderr
-
-#include <llvm-libc-types/FILE.h>
-#include <llvm-libc-types/cookie_io_functions_t.h>
-#include <llvm-libc-types/off_t.h>
-#include <llvm-libc-types/size_t.h>
 
 __BEGIN_C_DECLS
 
@@ -40,17 +42,25 @@ int puts(const char *) __NOEXCEPT;
 
 int remove(const char *) __NOEXCEPT;
 
+int scanf(const char *__restrict, ...) __NOEXCEPT;
+
 int snprintf(char *__restrict, size_t, const char *__restrict, ...) __NOEXCEPT;
 
 int sprintf(char *__restrict, const char *__restrict, ...) __NOEXCEPT;
+
+int sscanf(const char *__restrict, const char *__restrict, ...) __NOEXCEPT;
 
 int vasprintf(char **__restrict, const char *__restrict, va_list) __NOEXCEPT;
 
 int vprintf(const char *__restrict, va_list) __NOEXCEPT;
 
+int vscanf(const char *__restrict, va_list) __NOEXCEPT;
+
 int vsnprintf(char *__restrict, size_t, const char *__restrict, va_list) __NOEXCEPT;
 
 int vsprintf(char *__restrict, const char *__restrict, va_list) __NOEXCEPT;
+
+int vsscanf(const char *__restrict, const char *__restrict, va_list) __NOEXCEPT;
 
 extern FILE * stderr;
 extern FILE * stdin;

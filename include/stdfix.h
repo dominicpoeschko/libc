@@ -16,7 +16,20 @@
 // https://www.iso.org/standard/51126.html
 // https://standards.iso.org/ittf/PubliclyAvailableStandards/c051126_ISO_IEC_TR_18037_2008.zip
 
-#include <llvm-libc-types/stdfix-types.h>
+#include "llvm-libc-macros/stdfix-macros.h"
+#include "llvm-libc-types/int_hk_t.h"
+#include "llvm-libc-types/int_hr_t.h"
+#include "llvm-libc-types/int_k_t.h"
+#include "llvm-libc-types/int_lk_t.h"
+#include "llvm-libc-types/int_lr_t.h"
+#include "llvm-libc-types/int_r_t.h"
+#include "llvm-libc-types/stdfix-types.h"
+#include "llvm-libc-types/uint_uhk_t.h"
+#include "llvm-libc-types/uint_uhr_t.h"
+#include "llvm-libc-types/uint_uk_t.h"
+#include "llvm-libc-types/uint_ulk_t.h"
+#include "llvm-libc-types/uint_ulr_t.h"
+#include "llvm-libc-types/uint_ur_t.h"
 
 __BEGIN_C_DECLS
 
@@ -33,6 +46,54 @@ long fract abslr(long fract) __NOEXCEPT;
 
 fract absr(fract) __NOEXCEPT;
 
+int_hk_t bitshk(short accum) __NOEXCEPT;
+
+int_hr_t bitshr(short fract) __NOEXCEPT;
+
+int_k_t bitsk(accum) __NOEXCEPT;
+
+int_lk_t bitslk(long accum) __NOEXCEPT;
+
+int_lr_t bitslr(long fract) __NOEXCEPT;
+
+int_r_t bitsr(fract) __NOEXCEPT;
+
+uint_uhk_t bitsuhk(unsigned short accum) __NOEXCEPT;
+
+uint_uhr_t bitsuhr(unsigned short fract) __NOEXCEPT;
+
+uint_uk_t bitsuk(unsigned accum) __NOEXCEPT;
+
+uint_ulk_t bitsulk(unsigned long accum) __NOEXCEPT;
+
+uint_ulr_t bitsulr(unsigned long fract) __NOEXCEPT;
+
+uint_ur_t bitsur(unsigned fract) __NOEXCEPT;
+
+int countlshk(short accum) __NOEXCEPT;
+
+int countlshr(short fract) __NOEXCEPT;
+
+int countlsk(accum) __NOEXCEPT;
+
+int countlslk(long accum) __NOEXCEPT;
+
+int countlslr(long fract) __NOEXCEPT;
+
+int countlsr(fract) __NOEXCEPT;
+
+int countlsuhk(unsigned short accum) __NOEXCEPT;
+
+int countlsuhr(unsigned short fract) __NOEXCEPT;
+
+int countlsuk(unsigned accum) __NOEXCEPT;
+
+int countlsulk(unsigned long accum) __NOEXCEPT;
+
+int countlsulr(unsigned long fract) __NOEXCEPT;
+
+int countlsur(unsigned fract) __NOEXCEPT;
+
 short accum exphk(short accum) __NOEXCEPT;
 
 accum expk(accum) __NOEXCEPT;
@@ -40,6 +101,22 @@ accum expk(accum) __NOEXCEPT;
 short accum hkbits(int_hk_t) __NOEXCEPT;
 
 short fract hrbits(int_hr_t) __NOEXCEPT;
+
+int idivk(accum, accum) __NOEXCEPT;
+
+long int idivlk(long accum, long accum) __NOEXCEPT;
+
+long int idivlr(long fract, long fract) __NOEXCEPT;
+
+int idivr(fract, fract) __NOEXCEPT;
+
+unsigned int idivuk(unsigned accum, unsigned accum) __NOEXCEPT;
+
+unsigned long int idivulk(unsigned long accum, unsigned long accum) __NOEXCEPT;
+
+unsigned long int idivulr(unsigned long fract, unsigned long fract) __NOEXCEPT;
+
+unsigned int idivur(unsigned fract, unsigned fract) __NOEXCEPT;
 
 accum kbits(int_k_t) __NOEXCEPT;
 

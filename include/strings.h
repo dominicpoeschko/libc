@@ -11,7 +11,8 @@
 
 #include "__llvm-libc-common.h"
 
-#include <llvm-libc-types/size_t.h>
+#include "llvm-libc-types/locale_t.h"
+#include "llvm-libc-types/size_t.h"
 
 __BEGIN_C_DECLS
 
@@ -21,13 +22,23 @@ void bcopy(const void *, void *, size_t) __NOEXCEPT;
 
 void bzero(void *, size_t) __NOEXCEPT;
 
-char * index(const char *, int) __NOEXCEPT;
+int ffs(int) __NOEXCEPT;
 
-char * rindex(const char *, int) __NOEXCEPT;
+int ffsl(long) __NOEXCEPT;
+
+int ffsll(long long) __NOEXCEPT;
+
+char *index(const char *, int) __NOEXCEPT;
+
+char *rindex(const char *, int) __NOEXCEPT;
 
 int strcasecmp(const char *, const char *) __NOEXCEPT;
 
+int strcasecmp_l(const char *, const char *, locale_t) __NOEXCEPT;
+
 int strncasecmp(const char *, const char *, size_t) __NOEXCEPT;
+
+int strncasecmp_l(const char *, const char *, size_t, locale_t) __NOEXCEPT;
 
 __END_C_DECLS
 

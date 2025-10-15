@@ -12,25 +12,28 @@
 #include "__llvm-libc-common.h"
 #include "llvm-libc-macros/stdlib-macros.h"
 
-#include <llvm-libc-types/__atexithandler_t.h>
-#include <llvm-libc-types/__bsearchcompare_t.h>
-#include <llvm-libc-types/__qsortcompare_t.h>
-#include <llvm-libc-types/__qsortrcompare_t.h>
-#include <llvm-libc-types/div_t.h>
-#include <llvm-libc-types/ldiv_t.h>
-#include <llvm-libc-types/lldiv_t.h>
-#include <llvm-libc-types/locale_t.h>
-#include <llvm-libc-types/size_t.h>
+#include "llvm-libc-macros/null-macro.h"
+#include "llvm-libc-types/__atexithandler_t.h"
+#include "llvm-libc-types/__qsortcompare_t.h"
+#include "llvm-libc-types/__qsortrcompare_t.h"
+#include "llvm-libc-types/__search_compare_t.h"
+#include "llvm-libc-types/div_t.h"
+#include "llvm-libc-types/ldiv_t.h"
+#include "llvm-libc-types/lldiv_t.h"
+#include "llvm-libc-types/locale_t.h"
+#include "llvm-libc-types/size_t.h"
 
 __BEGIN_C_DECLS
 
 _Noreturn void _Exit(int) __NOEXCEPT;
 
+long a64l(const char *) __NOEXCEPT;
+
 _Noreturn void abort(void) __NOEXCEPT;
 
 int abs(int) __NOEXCEPT;
 
-void * aligned_alloc(size_t, size_t) __NOEXCEPT;
+void *aligned_alloc(size_t, size_t) __NOEXCEPT;
 
 double atof(const char *__restrict) __NOEXCEPT;
 
@@ -40,9 +43,9 @@ long atol(const char *) __NOEXCEPT;
 
 long long atoll(const char *) __NOEXCEPT;
 
-void * bsearch(const void *, const void *, size_t, size_t, __bsearchcompare_t) __NOEXCEPT;
+void *bsearch(const void *, const void *, size_t, size_t, __search_compare_t) __NOEXCEPT;
 
-void * calloc(size_t, size_t) __NOEXCEPT;
+void *calloc(size_t, size_t) __NOEXCEPT;
 
 div_t div(int, int) __NOEXCEPT;
 
@@ -58,29 +61,47 @@ long long llabs(long long) __NOEXCEPT;
 
 lldiv_t lldiv(long long, long long) __NOEXCEPT;
 
-void * malloc(size_t) __NOEXCEPT;
+void *malloc(size_t) __NOEXCEPT;
+
+size_t memalignment(const void *) __NOEXCEPT;
 
 void qsort(void *, size_t, size_t, __qsortcompare_t) __NOEXCEPT;
 
+void qsort_r(void *, size_t, size_t, __qsortrcompare_t, void *) __NOEXCEPT;
+
 int rand(void) __NOEXCEPT;
 
-void * realloc(void *, size_t) __NOEXCEPT;
+void *realloc(void *, size_t) __NOEXCEPT;
 
 void srand(unsigned int) __NOEXCEPT;
 
 double strtod(const char *__restrict, char **__restrict) __NOEXCEPT;
 
+double strtod_l(const char *__restrict, char **__restrict, locale_t) __NOEXCEPT;
+
 float strtof(const char *__restrict, char **__restrict) __NOEXCEPT;
+
+float strtof_l(const char *__restrict, char **__restrict, locale_t) __NOEXCEPT;
 
 long strtol(const char *__restrict, char **__restrict, int) __NOEXCEPT;
 
+long strtol_l(const char *__restrict, char **__restrict, int, locale_t) __NOEXCEPT;
+
 long double strtold(const char *__restrict, char **__restrict) __NOEXCEPT;
+
+long double strtold_l(const char *__restrict, char **__restrict, locale_t) __NOEXCEPT;
 
 long long strtoll(const char *__restrict, char **__restrict, int) __NOEXCEPT;
 
+long long strtoll_l(const char *__restrict, char **__restrict, int, locale_t) __NOEXCEPT;
+
 unsigned long strtoul(const char *__restrict, char **__restrict, int) __NOEXCEPT;
 
+unsigned long strtoul_l(const char *__restrict, char **__restrict, int, locale_t) __NOEXCEPT;
+
 unsigned long long strtoull(const char *__restrict, char **__restrict, int) __NOEXCEPT;
+
+unsigned long long strtoull_l(const char *__restrict, char **__restrict, int, locale_t) __NOEXCEPT;
 
 __END_C_DECLS
 

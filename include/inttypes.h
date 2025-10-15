@@ -13,7 +13,8 @@
 #include "llvm-libc-macros/inttypes-macros.h"
 #include <stdint.h>
 
-#include <llvm-libc-types/imaxdiv_t.h>
+#include "llvm-libc-types/imaxdiv_t.h"
+#include <stdint.h>
 
 __BEGIN_C_DECLS
 

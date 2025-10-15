@@ -14,23 +14,25 @@
 #include "llvm-libc-macros/math-macros.h"
 
 
-#include <llvm-libc-types/double_t.h>
-#include <llvm-libc-types/float128.h>
-#include <llvm-libc-types/float_t.h>
+#include "llvm-libc-types/double_t.h"
+#include "llvm-libc-types/float128.h"
+#include "llvm-libc-types/float_t.h"
 
 __BEGIN_C_DECLS
 
 float acosf(float) __NOEXCEPT;
 
-float acoshf(float) __NOEXCEPT;
-
 float asinf(float) __NOEXCEPT;
 
 float asinhf(float) __NOEXCEPT;
 
+double atan(double) __NOEXCEPT;
+
 double atan2(double, double) __NOEXCEPT;
 
 float atan2f(float, float) __NOEXCEPT;
+
+long double atan2l(long double, long double) __NOEXCEPT;
 
 float atanf(float) __NOEXCEPT;
 
@@ -64,6 +66,12 @@ float cosf(float) __NOEXCEPT;
 
 float coshf(float) __NOEXCEPT;
 
+long double ddivl(long double, long double) __NOEXCEPT;
+
+double dmull(long double, long double) __NOEXCEPT;
+
+double dsqrtl(long double) __NOEXCEPT;
+
 float erff(float) __NOEXCEPT;
 
 double exp(double) __NOEXCEPT;
@@ -71,6 +79,8 @@ double exp(double) __NOEXCEPT;
 double exp10(double) __NOEXCEPT;
 
 float exp10f(float) __NOEXCEPT;
+
+float exp10m1f(float) __NOEXCEPT;
 
 double exp2(double) __NOEXCEPT;
 
@@ -90,11 +100,23 @@ float fabsf(float) __NOEXCEPT;
 
 long double fabsl(long double) __NOEXCEPT;
 
+float fadd(double, double) __NOEXCEPT;
+
+float faddl(long double, long double) __NOEXCEPT;
+
 double fdim(double, double) __NOEXCEPT;
 
 float fdimf(float, float) __NOEXCEPT;
 
 long double fdiml(long double, long double) __NOEXCEPT;
+
+float fdiv(double, double) __NOEXCEPT;
+
+float fdivl(long double, long double) __NOEXCEPT;
+
+float ffma(double, double, double) __NOEXCEPT;
+
+float ffmal(long double, long double, long double) __NOEXCEPT;
 
 double floor(double) __NOEXCEPT;
 
@@ -172,6 +194,8 @@ long double fmodl(long double, long double) __NOEXCEPT;
 
 float fmul(double, double) __NOEXCEPT;
 
+float fmull(long double, long double) __NOEXCEPT;
+
 double frexp(double, int *) __NOEXCEPT;
 
 float frexpf(float, int *) __NOEXCEPT;
@@ -189,6 +213,20 @@ double fromfpx(double, int, unsigned int) __NOEXCEPT;
 float fromfpxf(float, int, unsigned int) __NOEXCEPT;
 
 long double fromfpxl(long double, int, unsigned int) __NOEXCEPT;
+
+float fsqrt(double) __NOEXCEPT;
+
+float fsqrtl(long double) __NOEXCEPT;
+
+float fsub(double, double) __NOEXCEPT;
+
+float fsubl(long double, long double) __NOEXCEPT;
+
+double getpayload(double *) __NOEXCEPT;
+
+float getpayloadf(float *) __NOEXCEPT;
+
+long double getpayloadl(long double *) __NOEXCEPT;
 
 double hypot(double, double) __NOEXCEPT;
 
@@ -352,6 +390,18 @@ float scalbnf(float, int) __NOEXCEPT;
 
 long double scalbnl(long double, int) __NOEXCEPT;
 
+int setpayload(double *, double) __NOEXCEPT;
+
+int setpayloadf(float *, float) __NOEXCEPT;
+
+int setpayloadl(long double *, long double) __NOEXCEPT;
+
+double setpayloadsig(double *, double) __NOEXCEPT;
+
+int setpayloadsigf(float *, float) __NOEXCEPT;
+
+int setpayloadsigl(long double *, long double) __NOEXCEPT;
+
 double sin(double) __NOEXCEPT;
 
 void sincosf(float, float *, float *) __NOEXCEPT;
@@ -371,6 +421,18 @@ double tan(double) __NOEXCEPT;
 float tanf(float) __NOEXCEPT;
 
 float tanhf(float) __NOEXCEPT;
+
+int totalorder(const double *, const double *) __NOEXCEPT;
+
+int totalorderf(const float *, const float *) __NOEXCEPT;
+
+int totalorderl(const long double *, const long double *) __NOEXCEPT;
+
+int totalordermag(const double *, const double *) __NOEXCEPT;
+
+int totalordermagf(const float *, const float *) __NOEXCEPT;
+
+int totalordermagl(const long double *, const long double *) __NOEXCEPT;
 
 double trunc(double) __NOEXCEPT;
 

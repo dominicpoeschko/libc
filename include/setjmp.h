@@ -11,13 +11,13 @@
 
 #include "__llvm-libc-common.h"
 
-#include <llvm-libc-types/jmp_buf.h>
+#include "llvm-libc-types/jmp_buf.h"
 
 __BEGIN_C_DECLS
 
 _Noreturn void longjmp(jmp_buf, int) __NOEXCEPT;
 
-int setjmp(jmp_buf) __NOEXCEPT;
+_Returns_twice int setjmp(jmp_buf) __NOEXCEPT;
 
 __END_C_DECLS
 
