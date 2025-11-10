@@ -1,5 +1,5 @@
 set(LIBC_SOURCE_FILES
-    # src/__support/CPP/new.cpp
+    src/__support/CPP/new.cpp
     # src/__support/File/dir.cpp
     # src/__support/File/file.cpp
     # src/__support/File/linux/dir.cpp
@@ -22,9 +22,9 @@ set(LIBC_SOURCE_FILES
     # src/__support/RPC/rpc_client.cpp
     # src/__support/StringUtil/error_to_string.cpp
     # src/__support/StringUtil/signal_to_string.cpp
-    # src/__support/freelist.cpp
-    # src/__support/freelist_heap.cpp
-    # src/__support/freetrie.cpp
+    src/__support/freelist.cpp
+    src/__support/freelist_heap.cpp
+    src/__support/freetrie.cpp
     # src/__support/threads/fork_callbacks.cpp
     # src/__support/threads/linux/CndVar.cpp
     # src/__support/threads/linux/callonce.cpp
@@ -987,9 +987,9 @@ set(LIBC_SOURCE_FILES
     # src/stdlib/atol.cpp
     # src/stdlib/atoll.cpp
     # src/stdlib/baremetal/abort.cpp
-    # src/stdlib/baremetal/aligned_alloc.cpp
+    src/stdlib/baremetal/aligned_alloc.cpp
     # src/stdlib/baremetal/calloc.cpp
-    # src/stdlib/baremetal/free.cpp
+    src/stdlib/baremetal/free.cpp
     # src/stdlib/baremetal/malloc.cpp
     # src/stdlib/baremetal/realloc.cpp
     # src/stdlib/bsearch.cpp
@@ -1286,10 +1286,16 @@ set(LIBC_SOURCE_FILES
     # src/wchar/wmemset.cpp
 )
 
+set(LIBC_MALLOC_SOURCE_FILES
+    src/stdlib/baremetal/malloc.cpp
+)
+
 set(libc_flags -DLIBC_COPT_PUBLIC_PACKAGING -Wno-sign-conversion -Wno-shadow -Wno-double-promotion)
 
 list(JOIN libc_flags " " LIBC_FLAGS)
 
 list(TRANSFORM LIBC_SOURCE_FILES PREPEND "${CMAKE_CURRENT_LIST_DIR}/")
+list(TRANSFORM LIBC_MALLOC_SOURCE_FILES PREPEND "${CMAKE_CURRENT_LIST_DIR}/")
 
 set_source_files_properties(${LIBC_SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${LIBC_FLAGS}")
+set_source_files_properties(${LIBC_MALLOC_SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${LIBC_FLAGS}")

@@ -21,12 +21,33 @@
 #ifdef NDEBUG
 #define assert(...) ((void)0)
 #else
+
+namespace uc_log {
+extern void log_assert(int Line, const char* Filename, const char* Expr);
+}
+
+#define INTERNAL_assert_lambda(x)                                 \
+    []() __attribute__((__noreturn__)) {                          \
+        if(__builtin_is_constant_evaluated()) {                   \
+            int DO_NOT_USE_see_assert[1];                         \
+            DO_NOT_USE_see_assert[1] = 0;                         \
+        } else {                                                  \
+            uc_log::log_assert(                                   \
+              __LINE__,                                           \
+              __FILE_NAME__,                                      \
+              #x);                                                \
+            while(true) {                                         \
+                asm("bkpt 5" : : :);                              \
+            }                                                     \
+        }                                                         \
+    }                                                             \
+    ()
+
 #ifdef __cplusplus
 extern "C"
 #endif
-_Noreturn void __assert_fail(const char *, const char *, unsigned, const char *) __NOEXCEPT;
-#define assert(...)  \
-  ((__VA_ARGS__) ? ((void)0) : __assert_fail(#__VA_ARGS__, __FILE__, __LINE__, __PRETTY_FUNCTION__))
+
+#define assert(x) ((void)((__builtin_expect(!!(x), true)) || (INTERNAL_assert_lambda(x), 0)))
 #endif
 
 __BEGIN_C_DECLS
