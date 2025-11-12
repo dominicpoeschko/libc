@@ -979,7 +979,7 @@ set(LIBC_SOURCE_FILES
     # src/stdio/vsscanf.cpp
     # src/stdlib/_Exit.cpp
     # src/stdlib/a64l.cpp
-    # src/stdlib/abs.cpp
+    src/stdlib/abs.cpp
     # src/stdlib/at_quick_exit.cpp
     # src/stdlib/atexit.cpp
     # src/stdlib/atof.cpp
@@ -993,7 +993,7 @@ set(LIBC_SOURCE_FILES
     # src/stdlib/baremetal/malloc.cpp
     # src/stdlib/baremetal/realloc.cpp
     # src/stdlib/bsearch.cpp
-    # src/stdlib/div.cpp
+    src/stdlib/div.cpp
     # src/stdlib/exit.cpp
     # src/stdlib/getenv.cpp
     # src/stdlib/gpu/abort.cpp
@@ -1004,11 +1004,11 @@ set(LIBC_SOURCE_FILES
     # src/stdlib/gpu/realloc.cpp
     # src/stdlib/gpu/system.cpp
     # src/stdlib/l64a.cpp
-    # src/stdlib/labs.cpp
-    # src/stdlib/ldiv.cpp
+    src/stdlib/labs.cpp
+    src/stdlib/ldiv.cpp
     # src/stdlib/linux/abort.cpp
-    # src/stdlib/llabs.cpp
-    # src/stdlib/lldiv.cpp
+    src/stdlib/llabs.cpp
+    src/stdlib/lldiv.cpp
     # src/stdlib/memalignment.cpp
     # src/stdlib/qsort.cpp
     # src/stdlib/qsort_r.cpp
