@@ -1,16 +1,15 @@
-//===-- C standard library header strings.h -------------------------------===//
+//===-- POSIX header <strings.h> --===//
 //
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
 // See https://llvm.org/LICENSE.txt for license information.
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
-//===----------------------------------------------------------------------===//
+//===---------------------------------------------------------------------===//
 
-#ifndef LLVM_LIBC_STRINGS_H
-#define LLVM_LIBC_STRINGS_H
+#ifndef _LLVM_LIBC_STRINGS_H
+#define _LLVM_LIBC_STRINGS_H
 
 #include "__llvm-libc-common.h"
-
 #include "llvm-libc-types/locale_t.h"
 #include "llvm-libc-types/size_t.h"
 
@@ -42,4 +41,4 @@ int strncasecmp_l(const char *, const char *, size_t, locale_t) __NOEXCEPT;
 
 __END_C_DECLS
 
-#endif // LLVM_LIBC_STRINGS_H
+#endif // _LLVM_LIBC_STRINGS_H

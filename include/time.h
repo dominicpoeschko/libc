@@ -40,6 +40,10 @@ struct tm *gmtime(time_t *) __NOEXCEPT;
 
 struct tm *gmtime_r(time_t *, struct tm *) __NOEXCEPT;
 
+struct tm *localtime(const time_t *) __NOEXCEPT;
+
+struct tm *localtime_r(const time_t *, struct tm *) __NOEXCEPT;
+
 time_t mktime(struct tm *) __NOEXCEPT;
 
 size_t strftime(char *__restrict, size_t, const char *__restrict, const struct tm *__restrict) __NOEXCEPT;

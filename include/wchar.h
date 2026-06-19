@@ -13,8 +13,10 @@
 #include "llvm-libc-macros/wchar-macros.h"
 
 #include "llvm-libc-macros/null-macro.h"
+#include "llvm-libc-types/FILE.h"
 #include "llvm-libc-types/mbstate_t.h"
 #include "llvm-libc-types/size_t.h"
+#include "llvm-libc-types/struct_tm.h"
 #include "llvm-libc-types/wchar_t.h"
 #include "llvm-libc-types/wint_t.h"
 

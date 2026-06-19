@@ -22,19 +22,41 @@
 #include "llvm-libc-types/size_t.h"
 #include <stdarg.h>
 
-#define stdout stdout
+#define stderr stderr
 
 #define stdin stdin
 
-#define stderr stderr
+#define stdout stdout
 
 __BEGIN_C_DECLS
 
 int asprintf(char **__restrict, const char *__restrict, ...) __NOEXCEPT;
 
+int feof(FILE *) __NOEXCEPT;
+
+int ferror(FILE *) __NOEXCEPT;
+
+int fgetc(FILE *) __NOEXCEPT;
+
+char *fgets(char *__restrict, int, FILE *__restrict) __NOEXCEPT;
+
+int fprintf(FILE *__restrict, const char *__restrict, ...) __NOEXCEPT;
+
+int fputc(int, FILE *) __NOEXCEPT;
+
+int fputs(const char *__restrict, FILE *__restrict) __NOEXCEPT;
+
+size_t fread(void *__restrict, size_t, size_t, FILE *__restrict) __NOEXCEPT;
+
+int fscanf(FILE *__restrict, const char *__restrict, ...) __NOEXCEPT;
+
+size_t fwrite(const void *__restrict, size_t, size_t, FILE *__restrict) __NOEXCEPT;
+
 int getchar(void) __NOEXCEPT;
 
 int printf(const char *__restrict, ...) __NOEXCEPT;
+
+int putc(int, FILE *) __NOEXCEPT;
 
 int putchar(int) __NOEXCEPT;
 
@@ -51,6 +73,10 @@ int sprintf(char *__restrict, const char *__restrict, ...) __NOEXCEPT;
 int sscanf(const char *__restrict, const char *__restrict, ...) __NOEXCEPT;
 
 int vasprintf(char **__restrict, const char *__restrict, va_list) __NOEXCEPT;
+
+int vfprintf(FILE *__restrict, const char *__restrict, va_list) __NOEXCEPT;
+
+int vfscanf(FILE *__restrict, const char *__restrict, va_list) __NOEXCEPT;
 
 int vprintf(const char *__restrict, va_list) __NOEXCEPT;
 

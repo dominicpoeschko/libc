@@ -1,16 +1,15 @@
-//===-- C standard library header string.h --------------------------------===//
+//===-- Standard C header <string.h> --===//
 //
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
 // See https://llvm.org/LICENSE.txt for license information.
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
-//===----------------------------------------------------------------------===//
+//===---------------------------------------------------------------------===//
 
-#ifndef LLVM_LIBC_STRING_H
-#define LLVM_LIBC_STRING_H
+#ifndef _LLVM_LIBC_STRING_H
+#define _LLVM_LIBC_STRING_H
 
 #include "__llvm-libc-common.h"
-
 #include "llvm-libc-macros/null-macro.h"
 #include "llvm-libc-types/locale_t.h"
 #include "llvm-libc-types/size_t.h"
@@ -101,4 +100,4 @@ size_t strxfrm_l(char *__restrict, const char *__restrict, size_t, locale_t) __N
 
 __END_C_DECLS
 
-#endif // LLVM_LIBC_STRING_H
+#endif // _LLVM_LIBC_STRING_H

@@ -22,6 +22,7 @@
 #include "llvm-libc-types/lldiv_t.h"
 #include "llvm-libc-types/locale_t.h"
 #include "llvm-libc-types/size_t.h"
+#include "llvm-libc-types/wchar_t.h"
 
 __BEGIN_C_DECLS
 
@@ -34,6 +35,8 @@ _Noreturn void abort(void) __NOEXCEPT;
 int abs(int) __NOEXCEPT;
 
 void *aligned_alloc(size_t, size_t) __NOEXCEPT;
+
+int atexit(__atexithandler_t) __NOEXCEPT;
 
 double atof(const char *__restrict) __NOEXCEPT;
 

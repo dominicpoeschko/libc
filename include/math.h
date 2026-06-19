@@ -20,7 +20,13 @@
 
 __BEGIN_C_DECLS
 
+double acos(double) __NOEXCEPT;
+
 float acosf(float) __NOEXCEPT;
+
+float acoshf(float) __NOEXCEPT;
+
+double asin(double) __NOEXCEPT;
 
 float asinf(float) __NOEXCEPT;
 
@@ -66,11 +72,17 @@ float cosf(float) __NOEXCEPT;
 
 float coshf(float) __NOEXCEPT;
 
-long double ddivl(long double, long double) __NOEXCEPT;
+float cospif(float) __NOEXCEPT;
+
+double daddl(long double, long double) __NOEXCEPT;
+
+double ddivl(long double, long double) __NOEXCEPT;
 
 double dmull(long double, long double) __NOEXCEPT;
 
 double dsqrtl(long double) __NOEXCEPT;
+
+double dsubl(long double, long double) __NOEXCEPT;
 
 float erff(float) __NOEXCEPT;
 
@@ -179,6 +191,8 @@ long double fminimum_magl(long double, long double) __NOEXCEPT;
 double fminimum_num(double, double) __NOEXCEPT;
 
 float fminimum_numf(float, float) __NOEXCEPT;
+
+long double fminimum_numl(long double, long double) __NOEXCEPT;
 
 float fminimumf(float, float) __NOEXCEPT;
 
@@ -404,11 +418,15 @@ int setpayloadsigl(long double *, long double) __NOEXCEPT;
 
 double sin(double) __NOEXCEPT;
 
+void sincos(double, double *, double *) __NOEXCEPT;
+
 void sincosf(float, float *, float *) __NOEXCEPT;
 
 float sinf(float) __NOEXCEPT;
 
 float sinhf(float) __NOEXCEPT;
+
+float sinpif(float) __NOEXCEPT;
 
 double sqrt(double) __NOEXCEPT;
 

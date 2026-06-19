@@ -10,6 +10,7 @@ set(LIBC_SOURCE_FILES
     # src/__support/GPU/allocator.cpp
     # src/__support/OSUtil/baremetal/exit.cpp
     # src/__support/OSUtil/baremetal/io.cpp
+    # src/__support/OSUtil/darwin/exit.cpp
     # src/__support/OSUtil/gpu/exit.cpp
     # src/__support/OSUtil/gpu/io.cpp
     # src/__support/OSUtil/linux/exit.cpp
@@ -27,18 +28,23 @@ set(LIBC_SOURCE_FILES
     src/__support/freetrie.cpp
     # src/__support/threads/fork_callbacks.cpp
     # src/__support/threads/linux/CndVar.cpp
+    # src/__support/threads/linux/barrier.cpp
     # src/__support/threads/linux/callonce.cpp
     # src/__support/threads/linux/thread.cpp
     # src/__support/threads/thread.cpp
+    # src/__support/time/darwin/clock_gettime.cpp
     # src/__support/time/gpu/clock_gettime.cpp
     # src/__support/time/gpu/time_utils.cpp
     # src/__support/time/linux/clock_gettime.cpp
+    # src/__support/time/linux/clock_settime.cpp
     # src/__support/time/windows/clock_gettime.cpp
     # src/__support/wchar/character_converter.cpp
     # src/__support/wchar/mbrtowc.cpp
     # src/__support/wchar/wcrtomb.cpp
     # src/arpa/inet/htonl.cpp
     # src/arpa/inet/htons.cpp
+    # src/arpa/inet/inet_addr.cpp
+    # src/arpa/inet/inet_aton.cpp
     # src/arpa/inet/ntohl.cpp
     # src/arpa/inet/ntohs.cpp
     # src/assert/generic/__assert_fail.cpp
@@ -98,8 +104,10 @@ set(LIBC_SOURCE_FILES
     # src/dirent/dirfd.cpp
     # src/dirent/opendir.cpp
     # src/dirent/readdir.cpp
+    # src/dlfcn/dladdr.cpp
     # src/dlfcn/dlclose.cpp
     # src/dlfcn/dlerror.cpp
+    # src/dlfcn/dlinfo.cpp
     # src/dlfcn/dlopen.cpp
     # src/dlfcn/dlsym.cpp
     # src/errno/libc_errno.cpp
@@ -188,6 +196,7 @@ set(LIBC_SOURCE_FILES
     # src/math/generic/asinf16.cpp
     src/math/generic/asinhf.cpp
     # src/math/generic/asinhf16.cpp
+    # src/math/generic/asinpif16.cpp
     src/math/generic/atan.cpp
     src/math/generic/atan2.cpp
     src/math/generic/atan2f.cpp
@@ -197,7 +206,29 @@ set(LIBC_SOURCE_FILES
     # src/math/generic/atanf16.cpp
     src/math/generic/atanhf.cpp
     # src/math/generic/atanhf16.cpp
+    # src/math/generic/atanpif16.cpp
+    # src/math/generic/bf16add.cpp
+    # src/math/generic/bf16addf.cpp
+    # src/math/generic/bf16addf128.cpp
+    # src/math/generic/bf16addl.cpp
+    # src/math/generic/bf16div.cpp
+    # src/math/generic/bf16divf.cpp
+    # src/math/generic/bf16divf128.cpp
+    # src/math/generic/bf16divl.cpp
+    # src/math/generic/bf16fma.cpp
+    # src/math/generic/bf16fmaf.cpp
+    # src/math/generic/bf16fmaf128.cpp
+    # src/math/generic/bf16fmal.cpp
+    # src/math/generic/bf16mul.cpp
+    # src/math/generic/bf16mulf.cpp
+    # src/math/generic/bf16mulf128.cpp
+    # src/math/generic/bf16mull.cpp
+    # src/math/generic/bf16sub.cpp
+    # src/math/generic/bf16subf.cpp
+    # src/math/generic/bf16subf128.cpp
+    # src/math/generic/bf16subl.cpp
     src/math/generic/canonicalize.cpp
+    # src/math/generic/canonicalizebf16.cpp
     src/math/generic/canonicalizef.cpp
     # src/math/generic/canonicalizef128.cpp
     # src/math/generic/canonicalizef16.cpp
@@ -205,12 +236,14 @@ set(LIBC_SOURCE_FILES
     src/math/generic/cbrt.cpp
     src/math/generic/cbrtf.cpp
     src/math/generic/ceil.cpp
+    # src/math/generic/ceilbf16.cpp
     src/math/generic/ceilf.cpp
     # src/math/generic/ceilf128.cpp
     # src/math/generic/ceilf16.cpp
     # src/math/generic/ceill.cpp
     src/math/generic/common_constants.cpp
     src/math/generic/copysign.cpp
+    # src/math/generic/copysignbf16.cpp
     src/math/generic/copysignf.cpp
     # src/math/generic/copysignf128.cpp
     # src/math/generic/copysignf16.cpp
@@ -277,6 +310,7 @@ set(LIBC_SOURCE_FILES
     # src/math/generic/f16subf128.cpp
     # src/math/generic/f16subl.cpp
     src/math/generic/fabs.cpp
+    # src/math/generic/fabsbf16.cpp
     src/math/generic/fabsf.cpp
     # src/math/generic/fabsf128.cpp
     # src/math/generic/fabsf16.cpp
@@ -285,6 +319,7 @@ set(LIBC_SOURCE_FILES
     # src/math/generic/faddf128.cpp
     # src/math/generic/faddl.cpp
     src/math/generic/fdim.cpp
+    # src/math/generic/fdimbf16.cpp
     src/math/generic/fdimf.cpp
     # src/math/generic/fdimf128.cpp
     # src/math/generic/fdimf16.cpp
@@ -296,6 +331,7 @@ set(LIBC_SOURCE_FILES
     # src/math/generic/ffmaf128.cpp
     src/math/generic/ffmal.cpp
     src/math/generic/floor.cpp
+    # src/math/generic/floorbf16.cpp
     src/math/generic/floorf.cpp
     # src/math/generic/floorf128.cpp
     # src/math/generic/floorf16.cpp
@@ -304,56 +340,67 @@ set(LIBC_SOURCE_FILES
     src/math/generic/fmaf.cpp
     # src/math/generic/fmaf16.cpp
     src/math/generic/fmax.cpp
+    # src/math/generic/fmaxbf16.cpp
     src/math/generic/fmaxf.cpp
     # src/math/generic/fmaxf128.cpp
     # src/math/generic/fmaxf16.cpp
     src/math/generic/fmaximum.cpp
     src/math/generic/fmaximum_mag.cpp
     src/math/generic/fmaximum_mag_num.cpp
+    # src/math/generic/fmaximum_mag_numbf16.cpp
     src/math/generic/fmaximum_mag_numf.cpp
     # src/math/generic/fmaximum_mag_numf128.cpp
     # src/math/generic/fmaximum_mag_numf16.cpp
     # src/math/generic/fmaximum_mag_numl.cpp
+    # src/math/generic/fmaximum_magbf16.cpp
     src/math/generic/fmaximum_magf.cpp
     # src/math/generic/fmaximum_magf128.cpp
     # src/math/generic/fmaximum_magf16.cpp
     # src/math/generic/fmaximum_magl.cpp
     src/math/generic/fmaximum_num.cpp
+    # src/math/generic/fmaximum_numbf16.cpp
     src/math/generic/fmaximum_numf.cpp
     # src/math/generic/fmaximum_numf128.cpp
     # src/math/generic/fmaximum_numf16.cpp
     # src/math/generic/fmaximum_numl.cpp
+    # src/math/generic/fmaximumbf16.cpp
     src/math/generic/fmaximumf.cpp
     # src/math/generic/fmaximumf128.cpp
     # src/math/generic/fmaximumf16.cpp
     # src/math/generic/fmaximuml.cpp
     # src/math/generic/fmaxl.cpp
     src/math/generic/fmin.cpp
+    # src/math/generic/fminbf16.cpp
     src/math/generic/fminf.cpp
     # src/math/generic/fminf128.cpp
     # src/math/generic/fminf16.cpp
     src/math/generic/fminimum.cpp
     src/math/generic/fminimum_mag.cpp
     src/math/generic/fminimum_mag_num.cpp
+    # src/math/generic/fminimum_mag_numbf16.cpp
     src/math/generic/fminimum_mag_numf.cpp
     # src/math/generic/fminimum_mag_numf128.cpp
     # src/math/generic/fminimum_mag_numf16.cpp
     # src/math/generic/fminimum_mag_numl.cpp
+    # src/math/generic/fminimum_magbf16.cpp
     src/math/generic/fminimum_magf.cpp
     # src/math/generic/fminimum_magf128.cpp
     # src/math/generic/fminimum_magf16.cpp
     # src/math/generic/fminimum_magl.cpp
     src/math/generic/fminimum_num.cpp
+    # src/math/generic/fminimum_numbf16.cpp
     src/math/generic/fminimum_numf.cpp
     # src/math/generic/fminimum_numf128.cpp
     # src/math/generic/fminimum_numf16.cpp
     # src/math/generic/fminimum_numl.cpp
+    # src/math/generic/fminimumbf16.cpp
     src/math/generic/fminimumf.cpp
     # src/math/generic/fminimumf128.cpp
     # src/math/generic/fminimumf16.cpp
     src/math/generic/fminimuml.cpp
     # src/math/generic/fminl.cpp
     src/math/generic/fmod.cpp
+    # src/math/generic/fmodbf16.cpp
     src/math/generic/fmodf.cpp
     # src/math/generic/fmodf128.cpp
     # src/math/generic/fmodf16.cpp
@@ -362,16 +409,19 @@ set(LIBC_SOURCE_FILES
     # src/math/generic/fmulf128.cpp
     # src/math/generic/fmull.cpp
     src/math/generic/frexp.cpp
+    # src/math/generic/frexpbf16.cpp
     src/math/generic/frexpf.cpp
     # src/math/generic/frexpf128.cpp
     # src/math/generic/frexpf16.cpp
     # src/math/generic/frexpl.cpp
     src/math/generic/fromfp.cpp
+    # src/math/generic/fromfpbf16.cpp
     src/math/generic/fromfpf.cpp
     # src/math/generic/fromfpf128.cpp
     # src/math/generic/fromfpf16.cpp
     # src/math/generic/fromfpl.cpp
     # src/math/generic/fromfpx.cpp
+    # src/math/generic/fromfpxbf16.cpp
     # src/math/generic/fromfpxf.cpp
     # src/math/generic/fromfpxf128.cpp
     # src/math/generic/fromfpxf16.cpp
@@ -383,6 +433,7 @@ set(LIBC_SOURCE_FILES
     # src/math/generic/fsubf128.cpp
     # src/math/generic/fsubl.cpp
     src/math/generic/getpayload.cpp
+    # src/math/generic/getpayloadbf16.cpp
     src/math/generic/getpayloadf.cpp
     # src/math/generic/getpayloadf128.cpp
     # src/math/generic/getpayloadf16.cpp
@@ -391,12 +442,14 @@ set(LIBC_SOURCE_FILES
     src/math/generic/hypotf.cpp
     # src/math/generic/hypotf16.cpp
     src/math/generic/ilogb.cpp
+    # src/math/generic/ilogbbf16.cpp
     src/math/generic/ilogbf.cpp
     # src/math/generic/ilogbf128.cpp
     # src/math/generic/ilogbf16.cpp
     # src/math/generic/ilogbl.cpp
     src/math/generic/inv_trigf_utils.cpp
     src/math/generic/iscanonical.cpp
+    # src/math/generic/iscanonicalbf16.cpp
     src/math/generic/iscanonicalf.cpp
     # src/math/generic/iscanonicalf128.cpp
     # src/math/generic/iscanonicalf16.cpp
@@ -405,26 +458,31 @@ set(LIBC_SOURCE_FILES
     src/math/generic/isnanf.cpp
     # src/math/generic/isnanl.cpp
     src/math/generic/issignaling.cpp
+    # src/math/generic/issignalingbf16.cpp
     src/math/generic/issignalingf.cpp
     # src/math/generic/issignalingf128.cpp
     # src/math/generic/issignalingf16.cpp
     # src/math/generic/issignalingl.cpp
     src/math/generic/ldexp.cpp
+    # src/math/generic/ldexpbf16.cpp
     src/math/generic/ldexpf.cpp
     # src/math/generic/ldexpf128.cpp
     # src/math/generic/ldexpf16.cpp
     # src/math/generic/ldexpl.cpp
     src/math/generic/llogb.cpp
+    # src/math/generic/llogbbf16.cpp
     src/math/generic/llogbf.cpp
     # src/math/generic/llogbf128.cpp
     # src/math/generic/llogbf16.cpp
     # src/math/generic/llogbl.cpp
     src/math/generic/llrint.cpp
+    # src/math/generic/llrintbf16.cpp
     src/math/generic/llrintf.cpp
     # src/math/generic/llrintf128.cpp
     # src/math/generic/llrintf16.cpp
     # src/math/generic/llrintl.cpp
     src/math/generic/llround.cpp
+    # src/math/generic/llroundbf16.cpp
     src/math/generic/llroundf.cpp
     # src/math/generic/llroundf128.cpp
     # src/math/generic/llroundf16.cpp
@@ -438,7 +496,9 @@ set(LIBC_SOURCE_FILES
     src/math/generic/log2.cpp
     src/math/generic/log2f.cpp
     # src/math/generic/log2f16.cpp
+    # src/math/generic/log_bf16.cpp
     src/math/generic/logb.cpp
+    # src/math/generic/logbbf16.cpp
     src/math/generic/logbf.cpp
     # src/math/generic/logbf128.cpp
     # src/math/generic/logbf16.cpp
@@ -446,45 +506,54 @@ set(LIBC_SOURCE_FILES
     src/math/generic/logf.cpp
     # src/math/generic/logf16.cpp
     src/math/generic/lrint.cpp
+    # src/math/generic/lrintbf16.cpp
     src/math/generic/lrintf.cpp
     # src/math/generic/lrintf128.cpp
     # src/math/generic/lrintf16.cpp
     # src/math/generic/lrintl.cpp
     src/math/generic/lround.cpp
+    # src/math/generic/lroundbf16.cpp
     src/math/generic/lroundf.cpp
     # src/math/generic/lroundf128.cpp
     # src/math/generic/lroundf16.cpp
     # src/math/generic/lroundl.cpp
     src/math/generic/modf.cpp
+    # src/math/generic/modfbf16.cpp
     src/math/generic/modff.cpp
     # src/math/generic/modff128.cpp
     # src/math/generic/modff16.cpp
     # src/math/generic/modfl.cpp
     src/math/generic/nan.cpp
+    # src/math/generic/nanbf16.cpp
     src/math/generic/nanf.cpp
     # src/math/generic/nanf128.cpp
     # src/math/generic/nanf16.cpp
     # src/math/generic/nanl.cpp
     src/math/generic/nearbyint.cpp
+    # src/math/generic/nearbyintbf16.cpp
     src/math/generic/nearbyintf.cpp
     # src/math/generic/nearbyintf128.cpp
     # src/math/generic/nearbyintf16.cpp
     # src/math/generic/nearbyintl.cpp
     src/math/generic/nextafter.cpp
+    # src/math/generic/nextafterbf16.cpp
     src/math/generic/nextafterf.cpp
     # src/math/generic/nextafterf128.cpp
     # src/math/generic/nextafterf16.cpp
     # src/math/generic/nextafterl.cpp
     src/math/generic/nextdown.cpp
+    # src/math/generic/nextdownbf16.cpp
     src/math/generic/nextdownf.cpp
     # src/math/generic/nextdownf128.cpp
     # src/math/generic/nextdownf16.cpp
     # src/math/generic/nextdownl.cpp
     src/math/generic/nexttoward.cpp
+    # src/math/generic/nexttowardbf16.cpp
     src/math/generic/nexttowardf.cpp
     # src/math/generic/nexttowardf16.cpp
     # src/math/generic/nexttowardl.cpp
     src/math/generic/nextup.cpp
+    # src/math/generic/nextupbf16.cpp
     src/math/generic/nextupf.cpp
     # src/math/generic/nextupf128.cpp
     # src/math/generic/nextupf16.cpp
@@ -492,22 +561,27 @@ set(LIBC_SOURCE_FILES
     src/math/generic/pow.cpp
     src/math/generic/powf.cpp
     src/math/generic/remainder.cpp
+    # src/math/generic/remainderbf16.cpp
     src/math/generic/remainderf.cpp
     # src/math/generic/remainderf128.cpp
     # src/math/generic/remainderf16.cpp
     # src/math/generic/remainderl.cpp
     src/math/generic/remquo.cpp
+    # src/math/generic/remquobf16.cpp
     src/math/generic/remquof.cpp
     # src/math/generic/remquof128.cpp
     # src/math/generic/remquof16.cpp
     # src/math/generic/remquol.cpp
     src/math/generic/rint.cpp
+    # src/math/generic/rintbf16.cpp
     src/math/generic/rintf.cpp
     # src/math/generic/rintf128.cpp
     # src/math/generic/rintf16.cpp
     # src/math/generic/rintl.cpp
     src/math/generic/round.cpp
+    # src/math/generic/roundbf16.cpp
     src/math/generic/roundeven.cpp
+    # src/math/generic/roundevenbf16.cpp
     src/math/generic/roundevenf.cpp
     # src/math/generic/roundevenf128.cpp
     # src/math/generic/roundevenf16.cpp
@@ -516,22 +590,28 @@ set(LIBC_SOURCE_FILES
     # src/math/generic/roundf128.cpp
     # src/math/generic/roundf16.cpp
     # src/math/generic/roundl.cpp
+    src/math/generic/rsqrtf.cpp
+    # src/math/generic/rsqrtf16.cpp
     src/math/generic/scalbln.cpp
+    # src/math/generic/scalblnbf16.cpp
     src/math/generic/scalblnf.cpp
     # src/math/generic/scalblnf128.cpp
     # src/math/generic/scalblnf16.cpp
     # src/math/generic/scalblnl.cpp
     src/math/generic/scalbn.cpp
+    # src/math/generic/scalbnbf16.cpp
     src/math/generic/scalbnf.cpp
     # src/math/generic/scalbnf128.cpp
     # src/math/generic/scalbnf16.cpp
     # src/math/generic/scalbnl.cpp
     src/math/generic/setpayload.cpp
+    # src/math/generic/setpayloadbf16.cpp
     src/math/generic/setpayloadf.cpp
     # src/math/generic/setpayloadf128.cpp
     # src/math/generic/setpayloadf16.cpp
     # src/math/generic/setpayloadl.cpp
     src/math/generic/setpayloadsig.cpp
+    # src/math/generic/setpayloadsigbf16.cpp
     src/math/generic/setpayloadsigf.cpp
     # src/math/generic/setpayloadsigf128.cpp
     # src/math/generic/setpayloadsigf16.cpp
@@ -546,6 +626,7 @@ set(LIBC_SOURCE_FILES
     src/math/generic/sinpif.cpp
     # src/math/generic/sinpif16.cpp
     src/math/generic/sqrt.cpp
+    # src/math/generic/sqrtbf16.cpp
     src/math/generic/sqrtf.cpp
     # src/math/generic/sqrtf128.cpp
     # src/math/generic/sqrtf16.cpp
@@ -558,26 +639,31 @@ set(LIBC_SOURCE_FILES
     # src/math/generic/tanpif.cpp
     # src/math/generic/tanpif16.cpp
     src/math/generic/totalorder.cpp
+    # src/math/generic/totalorderbf16.cpp
     src/math/generic/totalorderf.cpp
     # src/math/generic/totalorderf128.cpp
     # src/math/generic/totalorderf16.cpp
     # src/math/generic/totalorderl.cpp
     src/math/generic/totalordermag.cpp
+    # src/math/generic/totalordermagbf16.cpp
     src/math/generic/totalordermagf.cpp
     # src/math/generic/totalordermagf128.cpp
     # src/math/generic/totalordermagf16.cpp
     # src/math/generic/totalordermagl.cpp
     src/math/generic/trunc.cpp
+    # src/math/generic/truncbf16.cpp
     src/math/generic/truncf.cpp
     # src/math/generic/truncf128.cpp
     # src/math/generic/truncf16.cpp
     # src/math/generic/truncl.cpp
     src/math/generic/ufromfp.cpp
+    # src/math/generic/ufromfpbf16.cpp
     src/math/generic/ufromfpf.cpp
     # src/math/generic/ufromfpf128.cpp
     # src/math/generic/ufromfpf16.cpp
     # src/math/generic/ufromfpl.cpp
     # src/math/generic/ufromfpx.cpp
+    # src/math/generic/ufromfpxbf16.cpp
     # src/math/generic/ufromfpxf.cpp
     # src/math/generic/ufromfpxf128.cpp
     # src/math/generic/ufromfpxf16.cpp
@@ -617,18 +703,26 @@ set(LIBC_SOURCE_FILES
     # src/math/nvptx/tgammaf.cpp
     # src/math/nvptx/trunc.cpp
     # src/math/nvptx/truncf.cpp
+    # src/nl_types/catclose.cpp
+    # src/nl_types/catgets.cpp
+    # src/nl_types/catopen.cpp
     # src/poll/linux/poll.cpp
     # src/pthread/pthread_atfork.cpp
     # src/pthread/pthread_attr_destroy.cpp
     # src/pthread/pthread_attr_getdetachstate.cpp
     # src/pthread/pthread_attr_getguardsize.cpp
+    # src/pthread/pthread_attr_getschedparam.cpp
     # src/pthread/pthread_attr_getstack.cpp
     # src/pthread/pthread_attr_getstacksize.cpp
     # src/pthread/pthread_attr_init.cpp
     # src/pthread/pthread_attr_setdetachstate.cpp
     # src/pthread/pthread_attr_setguardsize.cpp
+    # src/pthread/pthread_attr_setschedparam.cpp
     # src/pthread/pthread_attr_setstack.cpp
     # src/pthread/pthread_attr_setstacksize.cpp
+    # src/pthread/pthread_barrier_destroy.cpp
+    # src/pthread/pthread_barrier_init.cpp
+    # src/pthread/pthread_barrier_wait.cpp
     # src/pthread/pthread_condattr_destroy.cpp
     # src/pthread/pthread_condattr_getclock.cpp
     # src/pthread/pthread_condattr_getpshared.cpp
@@ -682,6 +776,7 @@ set(LIBC_SOURCE_FILES
     # src/pthread/pthread_spin_lock.cpp
     # src/pthread/pthread_spin_trylock.cpp
     # src/pthread/pthread_spin_unlock.cpp
+    # src/sched/linux/getcpu.cpp
     # src/sched/linux/sched_get_priority_max.cpp
     # src/sched/linux/sched_get_priority_min.cpp
     # src/sched/linux/sched_getaffinity.cpp
@@ -719,6 +814,7 @@ set(LIBC_SOURCE_FILES
     # src/setjmp/riscv/setjmp.cpp
     # src/setjmp/riscv/sigsetjmp.cpp
     # src/setjmp/siglongjmp.cpp
+    # src/setjmp/wasm/sigsetjmp.cpp
     # src/setjmp/x86_64/longjmp.cpp
     # src/setjmp/x86_64/setjmp.cpp
     # src/setjmp/x86_64/sigsetjmp.cpp
@@ -856,6 +952,7 @@ set(LIBC_SOURCE_FILES
     # src/stdfix/lkbits.cpp
     # src/stdfix/lrbits.cpp
     # src/stdfix/rbits.cpp
+    # src/stdfix/rdivi.cpp
     # src/stdfix/roundhk.cpp
     # src/stdfix/roundhr.cpp
     # src/stdfix/roundk.cpp
@@ -882,12 +979,26 @@ set(LIBC_SOURCE_FILES
     # src/stdfix/ulrbits.cpp
     # src/stdfix/urbits.cpp
     # src/stdio/asprintf.cpp
+    # src/stdio/baremetal/feof.cpp
+    # src/stdio/baremetal/ferror.cpp
+    # src/stdio/baremetal/fgetc.cpp
+    # src/stdio/baremetal/fgets.cpp
+    # src/stdio/baremetal/fprintf.cpp
+    # src/stdio/baremetal/fputc.cpp
+    # src/stdio/baremetal/fputs.cpp
+    # src/stdio/baremetal/fread.cpp
+    # src/stdio/baremetal/fscanf.cpp
+    # src/stdio/baremetal/fwrite.cpp
+    # src/stdio/baremetal/getc.cpp
     # src/stdio/baremetal/getchar.cpp
     # src/stdio/baremetal/printf.cpp
+    # src/stdio/baremetal/putc.cpp
     # src/stdio/baremetal/putchar.cpp
     # src/stdio/baremetal/puts.cpp
     # src/stdio/baremetal/remove.cpp
     # src/stdio/baremetal/scanf.cpp
+    # src/stdio/baremetal/vfprintf.cpp
+    # src/stdio/baremetal/vfscanf.cpp
     # src/stdio/baremetal/vprintf.cpp
     # src/stdio/baremetal/vscanf.cpp
     # src/stdio/flockfile.cpp
@@ -1009,6 +1120,8 @@ set(LIBC_SOURCE_FILES
     # src/stdlib/linux/abort.cpp
     src/stdlib/llabs.cpp
     src/stdlib/lldiv.cpp
+    # src/stdlib/mbstowcs.cpp
+    # src/stdlib/mbtowc.cpp
     # src/stdlib/memalignment.cpp
     # src/stdlib/qsort.cpp
     # src/stdlib/qsort_r.cpp
@@ -1033,6 +1146,8 @@ set(LIBC_SOURCE_FILES
     # src/stdlib/strtoul_l.cpp
     # src/stdlib/strtoull.cpp
     # src/stdlib/strtoull_l.cpp
+    # src/stdlib/wcstombs.cpp
+    # src/stdlib/wctomb.cpp
     src/string/memccpy.cpp
     src/string/memchr.cpp
     src/string/memcmp.cpp
@@ -1107,6 +1222,11 @@ set(LIBC_SOURCE_FILES
     # src/sys/mman/linux/munlock.cpp
     # src/sys/mman/linux/munlockall.cpp
     # src/sys/mman/linux/munmap.cpp
+    # src/sys/mman/linux/pkey_alloc.cpp
+    # src/sys/mman/linux/pkey_free.cpp
+    # src/sys/mman/linux/pkey_get.cpp
+    # src/sys/mman/linux/pkey_mprotect.cpp
+    # src/sys/mman/linux/pkey_set.cpp
     # src/sys/mman/linux/posix_madvise.cpp
     # src/sys/mman/linux/remap_file_pages.cpp
     # src/sys/mman/linux/shm_open.cpp
@@ -1179,9 +1299,12 @@ set(LIBC_SOURCE_FILES
     # src/time/asctime.cpp
     # src/time/asctime_r.cpp
     # src/time/baremetal/clock.cpp
+    # src/time/baremetal/localtime.cpp
+    # src/time/baremetal/localtime_r.cpp
     # src/time/baremetal/timespec_get.cpp
     # src/time/ctime.cpp
     # src/time/ctime_r.cpp
+    # src/time/darwin/clock_gettime.cpp
     # src/time/difftime.cpp
     # src/time/gmtime.cpp
     # src/time/gmtime_r.cpp
@@ -1191,9 +1314,12 @@ set(LIBC_SOURCE_FILES
     # src/time/gpu/timespec_get.cpp
     # src/time/linux/clock.cpp
     # src/time/linux/clock_gettime.cpp
+    # src/time/linux/clock_settime.cpp
     # src/time/linux/gettimeofday.cpp
     # src/time/linux/nanosleep.cpp
     # src/time/linux/timespec_get.cpp
+    # src/time/localtime.cpp
+    # src/time/localtime_r.cpp
     # src/time/mktime.cpp
     # src/time/strftime.cpp
     # src/time/strftime_l.cpp
@@ -1206,13 +1332,16 @@ set(LIBC_SOURCE_FILES
     # src/unistd/gettid.cpp
     # src/unistd/linux/access.cpp
     # src/unistd/linux/chdir.cpp
+    # src/unistd/linux/chown.cpp
     # src/unistd/linux/close.cpp
     # src/unistd/linux/dup.cpp
     # src/unistd/linux/dup2.cpp
     # src/unistd/linux/dup3.cpp
     # src/unistd/linux/execv.cpp
     # src/unistd/linux/execve.cpp
+    # src/unistd/linux/faccessat.cpp
     # src/unistd/linux/fchdir.cpp
+    # src/unistd/linux/fchown.cpp
     # src/unistd/linux/fork.cpp
     # src/unistd/linux/fpathconf.cpp
     # src/unistd/linux/fsync.cpp
@@ -1220,6 +1349,9 @@ set(LIBC_SOURCE_FILES
     # src/unistd/linux/getcwd.cpp
     # src/unistd/linux/getentropy.cpp
     # src/unistd/linux/geteuid.cpp
+    # src/unistd/linux/getgid.cpp
+    # src/unistd/linux/gethostname.cpp
+    # src/unistd/linux/getpagesize.cpp
     # src/unistd/linux/getpid.cpp
     # src/unistd/linux/getppid.cpp
     # src/unistd/linux/getsid.cpp
@@ -1250,7 +1382,12 @@ set(LIBC_SOURCE_FILES
     # src/unistd/swab.cpp
     # src/unistd/windows/getentropy.cpp
     # src/wchar/btowc.cpp
+    # src/wchar/mblen.cpp
+    # src/wchar/mbrlen.cpp
     # src/wchar/mbrtowc.cpp
+    # src/wchar/mbsinit.cpp
+    # src/wchar/mbsnrtowcs.cpp
+    # src/wchar/mbsrtowcs.cpp
     # src/wchar/mbtowc.cpp
     # src/wchar/wcpcpy.cpp
     # src/wchar/wcpncpy.cpp
@@ -1260,6 +1397,7 @@ set(LIBC_SOURCE_FILES
     # src/wchar/wcscmp.cpp
     # src/wchar/wcscpy.cpp
     # src/wchar/wcscspn.cpp
+    # src/wchar/wcsdup.cpp
     # src/wchar/wcslcat.cpp
     # src/wchar/wcslcpy.cpp
     # src/wchar/wcslen.cpp
@@ -1267,12 +1405,17 @@ set(LIBC_SOURCE_FILES
     # src/wchar/wcsncmp.cpp
     # src/wchar/wcsncpy.cpp
     # src/wchar/wcsnlen.cpp
+    # src/wchar/wcsnrtombs.cpp
     # src/wchar/wcspbrk.cpp
     # src/wchar/wcsrchr.cpp
+    # src/wchar/wcsrtombs.cpp
     # src/wchar/wcsspn.cpp
     # src/wchar/wcsstr.cpp
+    # src/wchar/wcstod.cpp
+    # src/wchar/wcstof.cpp
     # src/wchar/wcstok.cpp
     # src/wchar/wcstol.cpp
+    # src/wchar/wcstold.cpp
     # src/wchar/wcstoll.cpp
     # src/wchar/wcstoul.cpp
     # src/wchar/wcstoull.cpp
@@ -1284,13 +1427,25 @@ set(LIBC_SOURCE_FILES
     # src/wchar/wmemmove.cpp
     # src/wchar/wmempcpy.cpp
     # src/wchar/wmemset.cpp
+    # src/wctype/iswalpha.cpp
 )
 
 set(LIBC_MALLOC_SOURCE_FILES
     src/stdlib/baremetal/malloc.cpp
 )
 
-set(libc_flags -DLIBC_COPT_PUBLIC_PACKAGING -Wno-sign-conversion -Wno-shadow -Wno-double-promotion)
+set(libc_flags
+    -DLIBC_COPT_PUBLIC_PACKAGING
+    -DLIBC_FULL_BUILD
+    -DLIBC_ERRNO_MODE=LIBC_ERRNO_MODE_SHARED
+    -DLIBC_THREAD_MODE=LIBC_THREAD_MODE_SINGLE
+    -DLIBC_ADD_NULL_CHECKS
+    -DLIBC_QSORT_IMPL=LIBC_QSORT_HEAP_SORT
+    "'-DLIBC_MATH=(LIBC_MATH_SKIP_ACCURATE_PASS|LIBC_MATH_SMALL_TABLES|LIBC_MATH_NO_ERRNO|LIBC_MATH_INTERMEDIATE_COMP_IN_FLOAT)'"
+    -fno-math-errno
+    -Wno-sign-conversion
+    -Wno-shadow
+    -Wno-double-promotion)
 
 list(JOIN libc_flags " " LIBC_FLAGS)
 
