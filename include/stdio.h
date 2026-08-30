@@ -94,4 +94,8 @@ extern FILE * stdout;
 
 __END_C_DECLS
 
+#if defined(__cplusplus) && !defined(__clang__)
+#include "__gcc-compat/stdio.h"
+#endif
+
 #endif // LLVM_LIBC_STDIO_H

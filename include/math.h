@@ -252,7 +252,11 @@ int ilogbf(float) __NOEXCEPT;
 
 int ilogbl(long double) __NOEXCEPT;
 
+// Not for gcc in C++: libc++ declares bool isnan(double) at global scope; clang resolves the
+// clash via its enable_if "preferred overload" attribute, on gcc the declarations conflict.
+#if !(defined(__cplusplus) && !defined(__clang__))
 int isnan(double) __NOEXCEPT;
+#endif
 
 int isnanf(float) __NOEXCEPT;
 
@@ -474,5 +478,9 @@ __END_C_DECLS
 
 
 #include "llvm-libc-macros/math-function-macros.h"
+
+#if defined(__cplusplus) && !defined(__clang__)
+#include "__gcc-compat/math.h"
+#endif
 
 #endif // LLVM_LIBC_MATH_H

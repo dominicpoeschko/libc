@@ -1447,6 +1447,13 @@ set(libc_flags
     -Wno-shadow
     -Wno-double-promotion)
 
+# gcc warns about upstream code that clang does not; not ours to fix, so silence per compiler.
+if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    # -fno-lto: under gcc LTO the asm-renamed C entrypoints (see src/__support/common.h) vanish
+    # from the final link; compiled as plain objects they resolve.
+    list(APPEND libc_flags -Wno-strict-aliasing -Wno-cast-align -Wno-strict-overflow -fno-lto)
+endif()
+
 list(JOIN libc_flags " " LIBC_FLAGS)
 
 list(TRANSFORM LIBC_SOURCE_FILES PREPEND "${CMAKE_CURRENT_LIST_DIR}/")

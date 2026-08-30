@@ -54,4 +54,8 @@ int timespec_get(struct timespec *, int) __NOEXCEPT;
 
 __END_C_DECLS
 
+#if defined(__cplusplus) && !defined(__clang__)
+#include "__gcc-compat/time.h"
+#endif
+
 #endif // LLVM_LIBC_TIME_H

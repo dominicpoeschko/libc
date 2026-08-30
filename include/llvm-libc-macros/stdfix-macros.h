@@ -9,7 +9,9 @@
 #ifndef LLVM_LIBC_MACROS_STDFIX_MACROS_H
 #define LLVM_LIBC_MACROS_STDFIX_MACROS_H
 
-#ifdef __FRACT_FBIT__
+// gcc defines __FRACT_FBIT__ in C++ mode too, but has no _Fract/_Accum types there
+// (fixed-point is C-only in gcc); clang has them in both.
+#if defined(__FRACT_FBIT__) && (defined(__clang__) || !defined(__cplusplus))
 // _Fract and _Accum types are available
 #define LIBC_COMPILER_HAS_FIXED_POINT
 #endif // __FRACT_FBIT__

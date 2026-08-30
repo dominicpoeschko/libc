@@ -108,4 +108,8 @@ unsigned long long strtoull_l(const char *__restrict, char **__restrict, int, lo
 
 __END_C_DECLS
 
+#if defined(__cplusplus) && !defined(__clang__)
+#include "__gcc-compat/stdlib.h"
+#endif
+
 #endif // LLVM_LIBC_STDLIB_H
