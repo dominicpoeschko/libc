@@ -1430,8 +1430,15 @@ set(LIBC_SOURCE_FILES
     # src/wctype/iswalpha.cpp
 )
 
+# Linked only with a heap (HEAP_SIZE). The freelist heap reports a corrupted heap through write_to_stderr() and
+# internal::exit(), which the baremetal OSUtil files forward to __llvm_libc_stdio_write() and __llvm_libc_exit() -
+# StartUp.hpp provides those (a crit log line, then a breakpoint).
 set(LIBC_MALLOC_SOURCE_FILES
     src/stdlib/baremetal/malloc.cpp
+    src/stdlib/baremetal/calloc.cpp
+    src/stdlib/baremetal/realloc.cpp
+    src/__support/OSUtil/baremetal/exit.cpp
+    src/__support/OSUtil/baremetal/io.cpp
 )
 
 set(libc_flags
@@ -1461,3 +1468,6 @@ list(TRANSFORM LIBC_MALLOC_SOURCE_FILES PREPEND "${CMAKE_CURRENT_LIST_DIR}/")
 
 set_source_files_properties(${LIBC_SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${LIBC_FLAGS}")
 set_source_files_properties(${LIBC_MALLOC_SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${LIBC_FLAGS}")
+# io.cpp defines stdin/stdout/stderr, which no header of this configuration declares.
+set_source_files_properties(${CMAKE_CURRENT_LIST_DIR}/src/__support/OSUtil/baremetal/io.cpp
+                            PROPERTIES COMPILE_FLAGS "${LIBC_FLAGS} -Wno-missing-variable-declarations")
