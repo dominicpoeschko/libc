@@ -1,18 +1,16 @@
-//===-- C standard library header inttypes.h ------------------------------===//
+//===-- Standard C header <inttypes.h> --===//
 //
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
 // See https://llvm.org/LICENSE.txt for license information.
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
-//===----------------------------------------------------------------------===//
+//===---------------------------------------------------------------------===//
 
-#ifndef LLVM_LIBC_INTTYPES_H
-#define LLVM_LIBC_INTTYPES_H
+#ifndef _LLVM_LIBC_INTTYPES_H
+#define _LLVM_LIBC_INTTYPES_H
 
 #include "__llvm-libc-common.h"
 #include "llvm-libc-macros/inttypes-macros.h"
-#include <stdint.h>
-
 #include "llvm-libc-types/imaxdiv_t.h"
 #include <stdint.h>
 
@@ -32,4 +30,4 @@ __END_C_DECLS
 #include "__gcc-compat/inttypes.h"
 #endif
 
-#endif // LLVM_LIBC_INTTYPES_H
+#endif // _LLVM_LIBC_INTTYPES_H

@@ -16,8 +16,4 @@
 #include "llvm-libc-types/mbstate_t.h"
 #include "llvm-libc-types/size_t.h"
 
-__BEGIN_C_DECLS
-
-__END_C_DECLS
-
 #endif // _LLVM_LIBC_UCHAR_H

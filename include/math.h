@@ -26,11 +26,17 @@ float acosf(float) __NOEXCEPT;
 
 float acoshf(float) __NOEXCEPT;
 
+float acospif(float) __NOEXCEPT;
+
 double asin(double) __NOEXCEPT;
 
 float asinf(float) __NOEXCEPT;
 
 float asinhf(float) __NOEXCEPT;
+
+double asinpi(double) __NOEXCEPT;
+
+float asinpif(float) __NOEXCEPT;
 
 double atan(double) __NOEXCEPT;
 
@@ -77,6 +83,8 @@ float cospif(float) __NOEXCEPT;
 double daddl(long double, long double) __NOEXCEPT;
 
 double ddivl(long double, long double) __NOEXCEPT;
+
+double dfmal(long double, long double, long double) __NOEXCEPT;
 
 double dmull(long double, long double) __NOEXCEPT;
 

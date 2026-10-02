@@ -4,17 +4,14 @@ set(LIBC_SOURCE_FILES
     # src/__support/File/file.cpp
     # src/__support/File/linux/dir.cpp
     # src/__support/File/linux/file.cpp
-    # src/__support/File/linux/stderr.cpp
-    # src/__support/File/linux/stdin.cpp
-    # src/__support/File/linux/stdout.cpp
     # src/__support/GPU/allocator.cpp
     # src/__support/OSUtil/baremetal/exit.cpp
     # src/__support/OSUtil/baremetal/io.cpp
     # src/__support/OSUtil/darwin/exit.cpp
+    # src/__support/OSUtil/freebsd/exit.cpp
     # src/__support/OSUtil/gpu/exit.cpp
     # src/__support/OSUtil/gpu/io.cpp
     # src/__support/OSUtil/linux/exit.cpp
-    # src/__support/OSUtil/linux/fcntl.cpp
     # src/__support/OSUtil/linux/vdso.cpp
     # src/__support/OSUtil/uefi/exit.cpp
     # src/__support/OSUtil/uefi/io.cpp
@@ -26,10 +23,10 @@ set(LIBC_SOURCE_FILES
     src/__support/freelist.cpp
     src/__support/freelist_heap.cpp
     src/__support/freetrie.cpp
+    # src/__support/net/address.cpp
+    # src/__support/regex/regex_expr_pool.cpp
     # src/__support/threads/fork_callbacks.cpp
-    # src/__support/threads/linux/CndVar.cpp
     # src/__support/threads/linux/barrier.cpp
-    # src/__support/threads/linux/callonce.cpp
     # src/__support/threads/linux/thread.cpp
     # src/__support/threads/thread.cpp
     # src/__support/time/darwin/clock_gettime.cpp
@@ -38,18 +35,23 @@ set(LIBC_SOURCE_FILES
     # src/__support/time/linux/clock_gettime.cpp
     # src/__support/time/linux/clock_settime.cpp
     # src/__support/time/windows/clock_gettime.cpp
-    # src/__support/wchar/character_converter.cpp
     # src/__support/wchar/mbrtowc.cpp
-    # src/__support/wchar/wcrtomb.cpp
+    # src/__support/wctype/wctype_classification_utils.cpp
+    # src/__support/wctype/wctype_conversion_utils.cpp
     # src/arpa/inet/htonl.cpp
     # src/arpa/inet/htons.cpp
     # src/arpa/inet/inet_addr.cpp
     # src/arpa/inet/inet_aton.cpp
+    # src/arpa/inet/inet_ntop.cpp
     # src/arpa/inet/ntohl.cpp
     # src/arpa/inet/ntohs.cpp
     # src/assert/generic/__assert_fail.cpp
     # src/assert/gpu/__assert_fail.cpp
     # src/compiler/generic/__stack_chk_fail.cpp
+    # src/complex/generic/cabs.cpp
+    # src/complex/generic/cabsf.cpp
+    # src/complex/generic/carg.cpp
+    # src/complex/generic/cargf.cpp
     # src/complex/generic/cimag.cpp
     # src/complex/generic/cimagf.cpp
     # src/complex/generic/cimagf128.cpp
@@ -102,6 +104,7 @@ set(LIBC_SOURCE_FILES
     # src/ctype/toupper_l.cpp
     # src/dirent/closedir.cpp
     # src/dirent/dirfd.cpp
+    # src/dirent/fdopendir.cpp
     # src/dirent/opendir.cpp
     # src/dirent/readdir.cpp
     # src/dlfcn/dladdr.cpp
@@ -110,6 +113,15 @@ set(LIBC_SOURCE_FILES
     # src/dlfcn/dlinfo.cpp
     # src/dlfcn/dlopen.cpp
     # src/dlfcn/dlsym.cpp
+    # src/err/err.cpp
+    # src/err/errx.cpp
+    # src/err/report.cpp
+    # src/err/verr.cpp
+    # src/err/verrx.cpp
+    # src/err/vwarn.cpp
+    # src/err/vwarnx.cpp
+    # src/err/warn.cpp
+    # src/err/warnx.cpp
     # src/errno/libc_errno.cpp
     # src/fcntl/linux/creat.cpp
     # src/fcntl/linux/fcntl.cpp
@@ -135,6 +147,10 @@ set(LIBC_SOURCE_FILES
     src/inttypes/imaxdiv.cpp
     src/inttypes/strtoimax.cpp
     src/inttypes/strtoumax.cpp
+    # src/inttypes/wcstoimax.cpp
+    # src/inttypes/wcstoumax.cpp
+    # src/libgen/basename.cpp
+    # src/libgen/dirname.cpp
     # src/link/dl_iterate_phdr.cpp
     # src/locale/duplocale.cpp
     # src/locale/freelocale.cpp
@@ -186,22 +202,29 @@ set(LIBC_SOURCE_FILES
     # src/math/amdgpu/trunc.cpp
     # src/math/amdgpu/truncf.cpp
     src/math/generic/acos.cpp
+    # src/math/generic/acosbf16.cpp
     src/math/generic/acosf.cpp
     # src/math/generic/acosf16.cpp
     src/math/generic/acoshf.cpp
     # src/math/generic/acoshf16.cpp
+    src/math/generic/acospif.cpp
     # src/math/generic/acospif16.cpp
     src/math/generic/asin.cpp
+    # src/math/generic/asinbf16.cpp
     src/math/generic/asinf.cpp
     # src/math/generic/asinf16.cpp
     src/math/generic/asinhf.cpp
     # src/math/generic/asinhf16.cpp
+    src/math/generic/asinpi.cpp
+    src/math/generic/asinpif.cpp
     # src/math/generic/asinpif16.cpp
     src/math/generic/atan.cpp
     src/math/generic/atan2.cpp
     src/math/generic/atan2f.cpp
     # src/math/generic/atan2f128.cpp
+    # src/math/generic/atan2f16.cpp
     # src/math/generic/atan2l.cpp
+    # src/math/generic/atanbf16.cpp
     src/math/generic/atanf.cpp
     # src/math/generic/atanf16.cpp
     src/math/generic/atanhf.cpp
@@ -234,14 +257,15 @@ set(LIBC_SOURCE_FILES
     # src/math/generic/canonicalizef16.cpp
     # src/math/generic/canonicalizel.cpp
     src/math/generic/cbrt.cpp
+    # src/math/generic/cbrtbf16.cpp
     src/math/generic/cbrtf.cpp
+    # src/math/generic/cbrtf16.cpp
     src/math/generic/ceil.cpp
     # src/math/generic/ceilbf16.cpp
     src/math/generic/ceilf.cpp
     # src/math/generic/ceilf128.cpp
     # src/math/generic/ceilf16.cpp
     # src/math/generic/ceill.cpp
-    src/math/generic/common_constants.cpp
     src/math/generic/copysign.cpp
     # src/math/generic/copysignbf16.cpp
     src/math/generic/copysignf.cpp
@@ -267,7 +291,9 @@ set(LIBC_SOURCE_FILES
     # src/math/generic/dsqrtl.cpp
     # src/math/generic/dsubf128.cpp
     # src/math/generic/dsubl.cpp
+    # src/math/generic/erfcf16.cpp
     # src/math/generic/erff.cpp
+    # src/math/generic/erff16.cpp
     src/math/generic/exp.cpp
     src/math/generic/exp10.cpp
     src/math/generic/exp10f.cpp
@@ -279,9 +305,9 @@ set(LIBC_SOURCE_FILES
     # src/math/generic/exp2f16.cpp
     # src/math/generic/exp2m1f.cpp
     # src/math/generic/exp2m1f16.cpp
+    # src/math/generic/expbf16.cpp
     src/math/generic/expf.cpp
     # src/math/generic/expf16.cpp
-    src/math/generic/explogxf.cpp
     src/math/generic/expm1.cpp
     src/math/generic/expm1f.cpp
     # src/math/generic/expm1f16.cpp
@@ -337,6 +363,7 @@ set(LIBC_SOURCE_FILES
     # src/math/generic/floorf16.cpp
     # src/math/generic/floorl.cpp
     src/math/generic/fma.cpp
+    # src/math/generic/fmabf16.cpp
     src/math/generic/fmaf.cpp
     # src/math/generic/fmaf16.cpp
     src/math/generic/fmax.cpp
@@ -439,6 +466,7 @@ set(LIBC_SOURCE_FILES
     # src/math/generic/getpayloadf16.cpp
     # src/math/generic/getpayloadl.cpp
     src/math/generic/hypot.cpp
+    # src/math/generic/hypotbf16.cpp
     src/math/generic/hypotf.cpp
     # src/math/generic/hypotf16.cpp
     src/math/generic/ilogb.cpp
@@ -447,7 +475,6 @@ set(LIBC_SOURCE_FILES
     # src/math/generic/ilogbf128.cpp
     # src/math/generic/ilogbf16.cpp
     # src/math/generic/ilogbl.cpp
-    src/math/generic/inv_trigf_utils.cpp
     src/math/generic/iscanonical.cpp
     # src/math/generic/iscanonicalbf16.cpp
     src/math/generic/iscanonicalf.cpp
@@ -456,6 +483,8 @@ set(LIBC_SOURCE_FILES
     # src/math/generic/iscanonicall.cpp
     src/math/generic/isnan.cpp
     src/math/generic/isnanf.cpp
+    # src/math/generic/isnanf128.cpp
+    # src/math/generic/isnanf16.cpp
     # src/math/generic/isnanl.cpp
     src/math/generic/issignaling.cpp
     # src/math/generic/issignalingbf16.cpp
@@ -491,11 +520,13 @@ set(LIBC_SOURCE_FILES
     src/math/generic/log10.cpp
     src/math/generic/log10f.cpp
     # src/math/generic/log10f16.cpp
+    # src/math/generic/log10p1f16.cpp
     src/math/generic/log1p.cpp
     src/math/generic/log1pf.cpp
     src/math/generic/log2.cpp
     src/math/generic/log2f.cpp
     # src/math/generic/log2f16.cpp
+    # src/math/generic/log2p1f16.cpp
     # src/math/generic/log_bf16.cpp
     src/math/generic/logb.cpp
     # src/math/generic/logbbf16.cpp
@@ -632,6 +663,7 @@ set(LIBC_SOURCE_FILES
     # src/math/generic/sqrtf16.cpp
     # src/math/generic/sqrtl.cpp
     src/math/generic/tan.cpp
+    # src/math/generic/tanbf16.cpp
     src/math/generic/tanf.cpp
     # src/math/generic/tanf16.cpp
     src/math/generic/tanhf.cpp
@@ -703,6 +735,12 @@ set(LIBC_SOURCE_FILES
     # src/math/nvptx/tgammaf.cpp
     # src/math/nvptx/trunc.cpp
     # src/math/nvptx/truncf.cpp
+    # src/mathvec/aarch64/expf.cpp
+    # src/mathvec/generic/expf.cpp
+    # src/net/linux/if_indextoname.cpp
+    # src/net/linux/if_nametoindex.cpp
+    # src/netinet/in6addr_any.cpp
+    # src/netinet/in6addr_loopback.cpp
     # src/nl_types/catclose.cpp
     # src/nl_types/catgets.cpp
     # src/nl_types/catopen.cpp
@@ -723,6 +761,13 @@ set(LIBC_SOURCE_FILES
     # src/pthread/pthread_barrier_destroy.cpp
     # src/pthread/pthread_barrier_init.cpp
     # src/pthread/pthread_barrier_wait.cpp
+    # src/pthread/pthread_cond_broadcast.cpp
+    # src/pthread/pthread_cond_clockwait.cpp
+    # src/pthread/pthread_cond_destroy.cpp
+    # src/pthread/pthread_cond_init.cpp
+    # src/pthread/pthread_cond_signal.cpp
+    # src/pthread/pthread_cond_timedwait.cpp
+    # src/pthread/pthread_cond_wait.cpp
     # src/pthread/pthread_condattr_destroy.cpp
     # src/pthread/pthread_condattr_getclock.cpp
     # src/pthread/pthread_condattr_getpshared.cpp
@@ -735,12 +780,15 @@ set(LIBC_SOURCE_FILES
     # src/pthread/pthread_exit.cpp
     # src/pthread/pthread_getname_np.cpp
     # src/pthread/pthread_getspecific.cpp
+    # src/pthread/pthread_getthreadid_np.cpp
+    # src/pthread/pthread_getunique_np.cpp
     # src/pthread/pthread_join.cpp
     # src/pthread/pthread_key_create.cpp
     # src/pthread/pthread_key_delete.cpp
     # src/pthread/pthread_mutex_destroy.cpp
     # src/pthread/pthread_mutex_init.cpp
     # src/pthread/pthread_mutex_lock.cpp
+    # src/pthread/pthread_mutex_trylock.cpp
     # src/pthread/pthread_mutex_unlock.cpp
     # src/pthread/pthread_mutexattr_destroy.cpp
     # src/pthread/pthread_mutexattr_getpshared.cpp
@@ -776,20 +824,32 @@ set(LIBC_SOURCE_FILES
     # src/pthread/pthread_spin_lock.cpp
     # src/pthread/pthread_spin_trylock.cpp
     # src/pthread/pthread_spin_unlock.cpp
+    # src/regex/regcomp.cpp
+    # src/regex/regerror.cpp
+    # src/regex/regexec.cpp
+    # src/regex/regfree.cpp
     # src/sched/linux/getcpu.cpp
+    # src/sched/linux/sched_andcpuset.cpp
+    # src/sched/linux/sched_clrcpuset.cpp
+    # src/sched/linux/sched_cpualloc.cpp
+    # src/sched/linux/sched_cpuequal.cpp
+    # src/sched/linux/sched_cpufree.cpp
     # src/sched/linux/sched_get_priority_max.cpp
     # src/sched/linux/sched_get_priority_min.cpp
     # src/sched/linux/sched_getaffinity.cpp
+    # src/sched/linux/sched_getcpu.cpp
     # src/sched/linux/sched_getcpucount.cpp
     # src/sched/linux/sched_getcpuisset.cpp
     # src/sched/linux/sched_getparam.cpp
     # src/sched/linux/sched_getscheduler.cpp
+    # src/sched/linux/sched_orcpuset.cpp
     # src/sched/linux/sched_rr_get_interval.cpp
     # src/sched/linux/sched_setaffinity.cpp
     # src/sched/linux/sched_setcpuset.cpp
     # src/sched/linux/sched_setcpuzero.cpp
     # src/sched/linux/sched_setparam.cpp
     # src/sched/linux/sched_setscheduler.cpp
+    # src/sched/linux/sched_xorcpuset.cpp
     # src/sched/linux/sched_yield.cpp
     # src/search/hcreate.cpp
     # src/search/hcreate_r.cpp
@@ -802,6 +862,13 @@ set(LIBC_SOURCE_FILES
     # src/search/lfind.cpp
     # src/search/lsearch.cpp
     # src/search/remque.cpp
+    # src/search/tdelete.cpp
+    # src/search/tdestroy.cpp
+    # src/search/tfind.cpp
+    # src/search/tsearch.cpp
+    # src/search/twalk.cpp
+    # src/search/twalk_r.cpp
+    # src/semaphore/linux/named_semaphore.cpp
     # src/setjmp/aarch64/longjmp.cpp
     # src/setjmp/aarch64/setjmp.cpp
     # src/setjmp/aarch64/sigsetjmp.cpp
@@ -820,6 +887,7 @@ set(LIBC_SOURCE_FILES
     # src/setjmp/x86_64/sigsetjmp.cpp
     # src/signal/linux/__restore.cpp
     # src/signal/linux/kill.cpp
+    # src/signal/linux/pthread_sigmask.cpp
     # src/signal/linux/raise.cpp
     # src/signal/linux/sigaction.cpp
     # src/signal/linux/sigaddset.cpp
@@ -923,7 +991,6 @@ set(LIBC_SOURCE_FILES
     # src/stdfix/bitsulk.cpp
     # src/stdfix/bitsulr.cpp
     # src/stdfix/bitsur.cpp
-    # src/stdfix/bitusk.cpp
     # src/stdfix/countlshk.cpp
     # src/stdfix/countlshr.cpp
     # src/stdfix/countlsk.cpp
@@ -979,10 +1046,13 @@ set(LIBC_SOURCE_FILES
     # src/stdfix/ulrbits.cpp
     # src/stdfix/urbits.cpp
     # src/stdio/asprintf.cpp
+    # src/stdio/asprintf_modular.cpp
     # src/stdio/baremetal/feof.cpp
     # src/stdio/baremetal/ferror.cpp
+    # src/stdio/baremetal/fflush.cpp
     # src/stdio/baremetal/fgetc.cpp
     # src/stdio/baremetal/fgets.cpp
+    # src/stdio/baremetal/file_internal.cpp
     # src/stdio/baremetal/fprintf.cpp
     # src/stdio/baremetal/fputc.cpp
     # src/stdio/baremetal/fputs.cpp
@@ -992,14 +1062,20 @@ set(LIBC_SOURCE_FILES
     # src/stdio/baremetal/getc.cpp
     # src/stdio/baremetal/getchar.cpp
     # src/stdio/baremetal/printf.cpp
+    # src/stdio/baremetal/printf_modular.cpp
     # src/stdio/baremetal/putc.cpp
     # src/stdio/baremetal/putchar.cpp
     # src/stdio/baremetal/puts.cpp
     # src/stdio/baremetal/remove.cpp
     # src/stdio/baremetal/scanf.cpp
+    # src/stdio/baremetal/stderr.cpp
+    # src/stdio/baremetal/stdin.cpp
+    # src/stdio/baremetal/stdout.cpp
+    # src/stdio/baremetal/ungetc.cpp
     # src/stdio/baremetal/vfprintf.cpp
     # src/stdio/baremetal/vfscanf.cpp
     # src/stdio/baremetal/vprintf.cpp
+    # src/stdio/baremetal/vprintf_modular.cpp
     # src/stdio/baremetal/vscanf.cpp
     # src/stdio/flockfile.cpp
     # src/stdio/fopencookie.cpp
@@ -1038,6 +1114,7 @@ set(LIBC_SOURCE_FILES
     # src/stdio/generic/putc.cpp
     # src/stdio/generic/putchar.cpp
     # src/stdio/generic/puts.cpp
+    # src/stdio/generic/rewind.cpp
     # src/stdio/generic/scanf.cpp
     # src/stdio/generic/stderr.cpp
     # src/stdio/generic/stdin.cpp
@@ -1079,17 +1156,27 @@ set(LIBC_SOURCE_FILES
     # src/stdio/linux/fdopen.cpp
     # src/stdio/linux/remove.cpp
     # src/stdio/linux/rename.cpp
+    # src/stdio/linux/stderr.cpp
+    # src/stdio/linux/stdin.cpp
+    # src/stdio/linux/stdout.cpp
+    # src/stdio/printf_core/float_impl.cpp
     # src/stdio/setbuf.cpp
     # src/stdio/setvbuf.cpp
     # src/stdio/snprintf.cpp
+    # src/stdio/snprintf_modular.cpp
     # src/stdio/sprintf.cpp
+    # src/stdio/sprintf_modular.cpp
     # src/stdio/sscanf.cpp
     # src/stdio/vasprintf.cpp
+    # src/stdio/vasprintf_modular.cpp
     # src/stdio/vsnprintf.cpp
+    # src/stdio/vsnprintf_modular.cpp
     # src/stdio/vsprintf.cpp
+    # src/stdio/vsprintf_modular.cpp
     # src/stdio/vsscanf.cpp
     # src/stdlib/_Exit.cpp
     # src/stdlib/a64l.cpp
+    # src/stdlib/abort.cpp
     src/stdlib/abs.cpp
     # src/stdlib/at_quick_exit.cpp
     # src/stdlib/atexit.cpp
@@ -1097,7 +1184,6 @@ set(LIBC_SOURCE_FILES
     # src/stdlib/atoi.cpp
     # src/stdlib/atol.cpp
     # src/stdlib/atoll.cpp
-    # src/stdlib/baremetal/abort.cpp
     src/stdlib/baremetal/aligned_alloc.cpp
     # src/stdlib/baremetal/calloc.cpp
     src/stdlib/baremetal/free.cpp
@@ -1105,9 +1191,9 @@ set(LIBC_SOURCE_FILES
     # src/stdlib/baremetal/realloc.cpp
     # src/stdlib/bsearch.cpp
     src/stdlib/div.cpp
+    # src/stdlib/environ_internal.cpp
     # src/stdlib/exit.cpp
     # src/stdlib/getenv.cpp
-    # src/stdlib/gpu/abort.cpp
     # src/stdlib/gpu/aligned_alloc.cpp
     # src/stdlib/gpu/calloc.cpp
     # src/stdlib/gpu/free.cpp
@@ -1117,12 +1203,16 @@ set(LIBC_SOURCE_FILES
     # src/stdlib/l64a.cpp
     src/stdlib/labs.cpp
     src/stdlib/ldiv.cpp
-    # src/stdlib/linux/abort.cpp
+    # src/stdlib/linux/realpath.cpp
+    # src/stdlib/linux/setenv.cpp
+    # src/stdlib/linux/unsetenv.cpp
     src/stdlib/llabs.cpp
     src/stdlib/lldiv.cpp
+    # src/stdlib/mblen.cpp
     # src/stdlib/mbstowcs.cpp
     # src/stdlib/mbtowc.cpp
     # src/stdlib/memalignment.cpp
+    # src/stdlib/mkstemp.cpp
     # src/stdlib/qsort.cpp
     # src/stdlib/qsort_r.cpp
     # src/stdlib/quick_exit.cpp
@@ -1180,6 +1270,7 @@ set(LIBC_SOURCE_FILES
     src/string/strncpy.cpp
     src/string/strndup.cpp
     src/string/strnlen.cpp
+    src/string/strnlen_s.cpp
     src/string/strpbrk.cpp
     src/string/strrchr.cpp
     src/string/strsep.cpp
@@ -1210,7 +1301,9 @@ set(LIBC_SOURCE_FILES
     # src/sys/epoll/linux/epoll_pwait2.cpp
     # src/sys/epoll/linux/epoll_wait.cpp
     # src/sys/ioctl/linux/ioctl.cpp
+    # src/sys/ipc/linux/ftok.cpp
     # src/sys/mman/linux/madvise.cpp
+    # src/sys/mman/linux/memfd_create.cpp
     # src/sys/mman/linux/mincore.cpp
     # src/sys/mman/linux/mlock.cpp
     # src/sys/mman/linux/mlock2.cpp
@@ -1231,19 +1324,36 @@ set(LIBC_SOURCE_FILES
     # src/sys/mman/linux/remap_file_pages.cpp
     # src/sys/mman/linux/shm_open.cpp
     # src/sys/mman/linux/shm_unlink.cpp
+    # src/sys/personality/linux/personality.cpp
     # src/sys/prctl/linux/prctl.cpp
+    # src/sys/ptrace/linux/ptrace.cpp
     # src/sys/random/linux/getrandom.cpp
     # src/sys/resource/linux/getrlimit.cpp
     # src/sys/resource/linux/setrlimit.cpp
     # src/sys/select/linux/select.cpp
+    # src/sys/sem/linux/semctl.cpp
+    # src/sys/sem/linux/semget.cpp
+    # src/sys/sem/linux/semop.cpp
     # src/sys/sendfile/linux/sendfile.cpp
+    # src/sys/socket/linux/accept.cpp
+    # src/sys/socket/linux/accept4.cpp
     # src/sys/socket/linux/bind.cpp
+    # src/sys/socket/linux/connect.cpp
+    # src/sys/socket/linux/getpeername.cpp
+    # src/sys/socket/linux/getsockname.cpp
+    # src/sys/socket/linux/getsockopt.cpp
+    # src/sys/socket/linux/listen.cpp
     # src/sys/socket/linux/recv.cpp
     # src/sys/socket/linux/recvfrom.cpp
+    # src/sys/socket/linux/recvmmsg.cpp
     # src/sys/socket/linux/recvmsg.cpp
     # src/sys/socket/linux/send.cpp
+    # src/sys/socket/linux/sendmmsg.cpp
     # src/sys/socket/linux/sendmsg.cpp
     # src/sys/socket/linux/sendto.cpp
+    # src/sys/socket/linux/setsockopt.cpp
+    # src/sys/socket/linux/shutdown.cpp
+    # src/sys/socket/linux/sockatmark.cpp
     # src/sys/socket/linux/socket.cpp
     # src/sys/socket/linux/socketpair.cpp
     # src/sys/stat/linux/chmod.cpp
@@ -1254,6 +1364,7 @@ set(LIBC_SOURCE_FILES
     # src/sys/stat/linux/mkdir.cpp
     # src/sys/stat/linux/mkdirat.cpp
     # src/sys/stat/linux/stat.cpp
+    # src/sys/stat/linux/utimensat.cpp
     # src/sys/statvfs/linux/fstatvfs.cpp
     # src/sys/statvfs/linux/statvfs.cpp
     # src/sys/time/linux/getitimer.cpp
@@ -1281,10 +1392,12 @@ set(LIBC_SOURCE_FILES
     # src/threads/linux/cnd_destroy.cpp
     # src/threads/linux/cnd_init.cpp
     # src/threads/linux/cnd_signal.cpp
+    # src/threads/linux/cnd_timedwait.cpp
     # src/threads/linux/cnd_wait.cpp
     # src/threads/mtx_destroy.cpp
     # src/threads/mtx_init.cpp
     # src/threads/mtx_lock.cpp
+    # src/threads/mtx_trylock.cpp
     # src/threads/mtx_unlock.cpp
     # src/threads/thrd_create.cpp
     # src/threads/thrd_current.cpp
@@ -1326,11 +1439,14 @@ set(LIBC_SOURCE_FILES
     # src/time/time.cpp
     # src/time/time_utils.cpp
     # src/time/windows/clock_getres.cpp
+    # src/ucontext/x86_64/getcontext.cpp
+    # src/ucontext/x86_64/setcontext.cpp
     # src/unistd/_exit.cpp
     # src/unistd/environ.cpp
     # src/unistd/getopt.cpp
     # src/unistd/gettid.cpp
     # src/unistd/linux/access.cpp
+    # src/unistd/linux/alarm.cpp
     # src/unistd/linux/chdir.cpp
     # src/unistd/linux/chown.cpp
     # src/unistd/linux/close.cpp
@@ -1382,19 +1498,29 @@ set(LIBC_SOURCE_FILES
     # src/unistd/swab.cpp
     # src/unistd/windows/getentropy.cpp
     # src/wchar/btowc.cpp
-    # src/wchar/mblen.cpp
+    # src/wchar/fgetwc.cpp
+    # src/wchar/fgetws.cpp
+    # src/wchar/fputwc.cpp
+    # src/wchar/fputws.cpp
+    # src/wchar/fwide.cpp
+    # src/wchar/getwc.cpp
+    # src/wchar/getwchar.cpp
     # src/wchar/mbrlen.cpp
     # src/wchar/mbrtowc.cpp
     # src/wchar/mbsinit.cpp
     # src/wchar/mbsnrtowcs.cpp
     # src/wchar/mbsrtowcs.cpp
-    # src/wchar/mbtowc.cpp
+    # src/wchar/putwc.cpp
+    # src/wchar/putwchar.cpp
+    # src/wchar/swprintf.cpp
+    # src/wchar/ungetwc.cpp
     # src/wchar/wcpcpy.cpp
     # src/wchar/wcpncpy.cpp
     # src/wchar/wcrtomb.cpp
     # src/wchar/wcscat.cpp
     # src/wchar/wcschr.cpp
     # src/wchar/wcscmp.cpp
+    # src/wchar/wcscoll.cpp
     # src/wchar/wcscpy.cpp
     # src/wchar/wcscspn.cpp
     # src/wchar/wcsdup.cpp
@@ -1419,15 +1545,30 @@ set(LIBC_SOURCE_FILES
     # src/wchar/wcstoll.cpp
     # src/wchar/wcstoul.cpp
     # src/wchar/wcstoull.cpp
+    # src/wchar/wcsxfrm.cpp
     # src/wchar/wctob.cpp
-    # src/wchar/wctomb.cpp
     # src/wchar/wmemchr.cpp
     # src/wchar/wmemcmp.cpp
     # src/wchar/wmemcpy.cpp
     # src/wchar/wmemmove.cpp
     # src/wchar/wmempcpy.cpp
     # src/wchar/wmemset.cpp
+    # src/wctype/iswalnum.cpp
     # src/wctype/iswalpha.cpp
+    # src/wctype/iswblank.cpp
+    # src/wctype/iswcntrl.cpp
+    # src/wctype/iswctype.cpp
+    # src/wctype/iswdigit.cpp
+    # src/wctype/iswgraph.cpp
+    # src/wctype/iswlower.cpp
+    # src/wctype/iswprint.cpp
+    # src/wctype/iswpunct.cpp
+    # src/wctype/iswspace.cpp
+    # src/wctype/iswupper.cpp
+    # src/wctype/iswxdigit.cpp
+    # src/wctype/towlower.cpp
+    # src/wctype/towupper.cpp
+    # src/wctype/wctype.cpp
 )
 
 # Linked only with a heap (HEAP_SIZE). The freelist heap reports a corrupted heap through write_to_stderr() and

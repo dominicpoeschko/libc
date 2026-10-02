@@ -10,9 +10,13 @@
 #define _LLVM_LIBC_STRING_H
 
 #include "__llvm-libc-common.h"
+#include "llvm-libc-macros/annex-k-macros.h"
 #include "llvm-libc-macros/null-macro.h"
+#include "llvm-libc-types/errno_t.h"
 #include "llvm-libc-types/locale_t.h"
+#include "llvm-libc-types/rsize_t.h"
 #include "llvm-libc-types/size_t.h"
+#include <strings.h>
 
 __BEGIN_C_DECLS
 
@@ -79,6 +83,10 @@ char *strncpy(char *__restrict, const char *__restrict, size_t) __NOEXCEPT;
 char *strndup(const char *, size_t) __NOEXCEPT;
 
 size_t strnlen(const char *, size_t) __NOEXCEPT;
+
+#ifdef LIBC_HAS_ANNEX_K
+size_t strnlen_s(const char *, size_t) __NOEXCEPT;
+#endif // LIBC_HAS_ANNEX_K
 
 char *strpbrk(const char *, const char *) __NOEXCEPT;
 

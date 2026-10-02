@@ -1,26 +1,28 @@
-//===-- C standard library header stdlib.h --------------------------------===//
+//===-- Standard C header <stdlib.h> --===//
 //
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
 // See https://llvm.org/LICENSE.txt for license information.
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
-//===----------------------------------------------------------------------===//
+//===---------------------------------------------------------------------===//
 
-#ifndef LLVM_LIBC_STDLIB_H
-#define LLVM_LIBC_STDLIB_H
+#ifndef _LLVM_LIBC_STDLIB_H
+#define _LLVM_LIBC_STDLIB_H
 
 #include "__llvm-libc-common.h"
-#include "llvm-libc-macros/stdlib-macros.h"
-
 #include "llvm-libc-macros/null-macro.h"
+#include "llvm-libc-macros/stdlib-macros.h"
 #include "llvm-libc-types/__atexithandler_t.h"
 #include "llvm-libc-types/__qsortcompare_t.h"
 #include "llvm-libc-types/__qsortrcompare_t.h"
 #include "llvm-libc-types/__search_compare_t.h"
+#include "llvm-libc-types/constraint_handler_t.h"
 #include "llvm-libc-types/div_t.h"
+#include "llvm-libc-types/errno_t.h"
 #include "llvm-libc-types/ldiv_t.h"
 #include "llvm-libc-types/lldiv_t.h"
 #include "llvm-libc-types/locale_t.h"
+#include "llvm-libc-types/rsize_t.h"
 #include "llvm-libc-types/size_t.h"
 #include "llvm-libc-types/wchar_t.h"
 
@@ -112,4 +114,4 @@ __END_C_DECLS
 #include "__gcc-compat/stdlib.h"
 #endif
 
-#endif // LLVM_LIBC_STDLIB_H
+#endif // _LLVM_LIBC_STDLIB_H

@@ -1,17 +1,17 @@
-//===-- System V header elf.h ---------------------------------------------===//
+//===-- GNU / SVID header <elf.h> --===//
 //
 // Part of the LLVM Project, under the Apache License v2.0 with LLVM Exceptions.
 // See https://llvm.org/LICENSE.txt for license information.
 // SPDX-License-Identifier: Apache-2.0 WITH LLVM-exception
 //
-//===----------------------------------------------------------------------===//
+//===---------------------------------------------------------------------===//
 
-#ifndef LLVM_LIBC_ELF_H
-#define LLVM_LIBC_ELF_H
+#ifndef _LLVM_LIBC_ELF_H
+#define _LLVM_LIBC_ELF_H
 
 #include "__llvm-libc-common.h"
 #include "llvm-libc-macros/elf-macros.h"
-
+#include "llvm-libc-macros/sys-auxv-macros.h"
 #include "llvm-libc-types/Elf32_Addr.h"
 #include "llvm-libc-types/Elf32_Chdr.h"
 #include "llvm-libc-types/Elf32_Dyn.h"
@@ -32,6 +32,8 @@
 #include "llvm-libc-types/Elf32_Verneed.h"
 #include "llvm-libc-types/Elf32_Versym.h"
 #include "llvm-libc-types/Elf32_Word.h"
+#include "llvm-libc-types/Elf32_Xword.h"
+#include "llvm-libc-types/Elf32_auxv_t.h"
 #include "llvm-libc-types/Elf64_Addr.h"
 #include "llvm-libc-types/Elf64_Chdr.h"
 #include "llvm-libc-types/Elf64_Dyn.h"
@@ -54,6 +56,7 @@
 #include "llvm-libc-types/Elf64_Versym.h"
 #include "llvm-libc-types/Elf64_Word.h"
 #include "llvm-libc-types/Elf64_Xword.h"
+#include "llvm-libc-types/Elf64_auxv_t.h"
 
 #define DF_BIND_NOW 0x8
 
@@ -65,9 +68,19 @@
 
 #define DF_TEXTREL 0x4
 
+#define DT_ADDRRNGHI 0x6ffffeff
+
+#define DT_ADDRRNGLO 0x6ffffe00
+
+#define DT_AUDIT 0x6ffffefc
+
 #define DT_BIND_NOW 24
 
+#define DT_CONFIG 0x6ffffefa
+
 #define DT_DEBUG 21
+
+#define DT_DEPAUDIT 0x6ffffefb
 
 #define DT_ENCODING 32
 
@@ -78,6 +91,12 @@
 #define DT_FINI_ARRAYSZ 28
 
 #define DT_FLAGS 30
+
+#define DT_GNU_CONFLICT 0x6ffffef8
+
+#define DT_GNU_HASH 0x6ffffef5
+
+#define DT_GNU_LIBLIST 0x6ffffef9
 
 #define DT_HASH 4
 
@@ -97,11 +116,15 @@
 
 #define DT_LOPROC 0x70000000
 
+#define DT_MOVETAB 0x6ffffefe
+
 #define DT_NEEDED 1
 
 #define DT_NULL 0
 
 #define DT_PLTGOT 3
+
+#define DT_PLTPAD 0x6ffffefd
 
 #define DT_PLTREL 20
 
@@ -141,11 +164,17 @@
 
 #define DT_SYMENT 11
 
+#define DT_SYMINFO 0x6ffffeff
+
 #define DT_SYMTAB 6
 
 #define DT_SYMTAB_SHNDX 34
 
 #define DT_TEXTREL 22
+
+#define DT_TLSDESC_GOT 0x6ffffef7
+
+#define DT_TLSDESC_PLT 0x6ffffef6
 
 #define DT_VERDEF 0x6ffffffc
 
@@ -186,6 +215,8 @@
 #define ELFCLASS64 2
 
 #define ELFCLASSNONE 0
+
+#define ELFCLASSNUM 3
 
 #define ELFCOMPRESS_HIOS 0x6fffffff
 
@@ -253,7 +284,31 @@
 
 #define EV_NONE 0
 
+#define EV_NUM 2
+
+#define GNU_PROPERTY_X86_FEATURE_1_AND 0xc0000002
+
+#define GNU_PROPERTY_X86_FEATURE_1_SHSTK 0x00000002
+
+#define NN_AUXV "CORE"
+
+#define NN_FILE "CORE"
+
+#define NN_PRFPREG "CORE"
+
+#define NN_PRPSINFO "CORE"
+
+#define NN_PRSTATUS "CORE"
+
+#define NN_SIGINFO "CORE"
+
+#define NN_TASKSTRUCT "CORE"
+
 #define NT_AUXV 6
+
+#define NT_FILE 0x46494c45
+
+#define NT_FPREGSET 2
 
 #define NT_GNU_ABI_TAG 1
 
@@ -269,9 +324,15 @@
 
 #define NT_PRFPREG 2
 
+#define NT_PRFPXREG 20
+
 #define NT_PRPSINFO 3
 
 #define NT_PRSTATUS 1
+
+#define NT_PRXREG 4
+
+#define NT_SIGINFO 0x53494749
 
 #define NT_TASKSTRUCT 4
 
@@ -285,7 +346,19 @@
 
 #define PF_X 0x1
 
+#define PN_XNUM 0xffff
+
+#define PT_AARCH64_MEMTAG_MTE 0x70000002
+
 #define PT_DYNAMIC 2
+
+#define PT_GNU_EH_FRAME 0x6474e550
+
+#define PT_GNU_PROPERTY 0x6474e553
+
+#define PT_GNU_RELRO 0x6474e552
+
+#define PT_GNU_STACK 0x6474e551
 
 #define PT_HIOS 0x6fffffff
 
@@ -308,6 +381,14 @@
 #define PT_SHLIB 5
 
 #define PT_TLS 7
+
+#define R_AARCH64_IRELATIVE 1032
+
+#define R_ARM_IRELATIVE 160
+
+#define R_RISCV_IRELATIVE 58
+
+#define R_X86_64_IRELATIVE 37
 
 #define SELFMAG 4
 
@@ -467,8 +548,4 @@
 
 #define VER_NDX_LORESERVE 0xff00
 
-__BEGIN_C_DECLS
-
-__END_C_DECLS
-
-#endif // LLVM_LIBC_ELF_H
+#endif // _LLVM_LIBC_ELF_H
