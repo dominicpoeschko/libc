@@ -1591,6 +1591,13 @@ set(libc_flags
     -DLIBC_QSORT_IMPL=LIBC_QSORT_HEAP_SORT
     "'-DLIBC_MATH=(LIBC_MATH_SKIP_ACCURATE_PASS|LIBC_MATH_SMALL_TABLES|LIBC_MATH_NO_ERRNO|LIBC_MATH_INTERMEDIATE_COMP_IN_FLOAT)'"
     -fno-math-errno
+    # No stack protector in the libc (dominic, 2026-10-05): -fstack-protector-strong guards every function that takes
+    # a local's address, and the memory functions pass their pointers by reference - a canary in every memcpy
+    # (14 cycles a call on the RP2040) around code that has no buffer of its own.
+    -fno-stack-protector
+    # freestanding and builtin-free whatever the application is: no memcpy is built out of memcpy
+    -ffreestanding
+    -fno-builtin
     -Wno-sign-conversion
     -Wno-shadow
     -Wno-double-promotion)
@@ -1608,6 +1615,32 @@ list(TRANSFORM LIBC_SOURCE_FILES PREPEND "${CMAKE_CURRENT_LIST_DIR}/")
 list(TRANSFORM LIBC_MALLOC_SOURCE_FILES PREPEND "${CMAKE_CURRENT_LIST_DIR}/")
 
 set_source_files_properties(${LIBC_SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${LIBC_FLAGS}")
+
+# The memory functions are built at -Os whatever the image is built with (the flag comes last on the command line).
+# At -Oz clang 23 calls __aeabi_uread4/__aeabi_uwrite4 inside their aligned word loops on the Cortex-M0+ (-Os and -O2
+# emit plain loads and stores). Measured 2026-10-05 with test_examples 108_runtime_cost
+# (kvasir_work plans/binary_quality/RESULTS.md): a 4-byte memcpy 157 -> 79 cycles on the RP2040 and 63 -> 38 on the
+# RP2350, a 1024-byte memset 2862 -> 1436 and 387 -> 348; the M0+ release images 1.4 % smaller in sum, the M33 ones
+# 0.1 % larger.
+set(libc_memory_sources src/string/memcpy.cpp src/string/memmove.cpp src/string/mempcpy.cpp src/string/memset.cpp
+                        src/string/memset_explicit.cpp src/strings/bcopy.cpp src/strings/bzero.cpp)
+list(TRANSFORM libc_memory_sources PREPEND "${CMAKE_CURRENT_LIST_DIR}/")
+set_source_files_properties(${libc_memory_sources} PROPERTIES COMPILE_FLAGS "${LIBC_FLAGS} -Os")
+
+# The Cortex-M0+ takes memcpy, memmove and memset - and the AEABI entry points, which compiler-rt otherwise forwards
+# to them with one more jump - from Kvasir's Thumb-1 assembly (kvasir/arm/memory_v6m.S, its head says why). Measured
+# 2026-10-06 on the RP2040 (108_runtime_cost): memcpy 1 byte 52 -> 21 cycles, 1024 bytes 885 -> 777 aligned and
+# 5446 -> 3150 unaligned, memset 1024 bytes 1436 -> 509, memmove overlapping 1024 bytes 7197 -> 1384; release images
+# 0.9 % smaller, sanitize images 5.9 %. Checked by test_examples 110_memory_check.
+# The Thumb-2 cores (M33, M4) take theirs from memory_v7m.S since the same day: compiler-rt's __aeabi_mem* forwarders
+# cost +2..+5 cycles on every copy a hosted build emits, the C++ memmove copied an overlapping range byte by byte.
+list(REMOVE_ITEM LIBC_SOURCE_FILES ${CMAKE_CURRENT_LIST_DIR}/src/string/memcpy.cpp
+     ${CMAKE_CURRENT_LIST_DIR}/src/string/memmove.cpp ${CMAKE_CURRENT_LIST_DIR}/src/string/memset.cpp)
+if(TARGET_ARCH STREQUAL "v6-m")
+    list(APPEND LIBC_SOURCE_FILES ${CMAKE_CURRENT_LIST_DIR}/kvasir/arm/memory_v6m.S)
+else()
+    list(APPEND LIBC_SOURCE_FILES ${CMAKE_CURRENT_LIST_DIR}/kvasir/arm/memory_v7m.S)
+endif()
 set_source_files_properties(${LIBC_MALLOC_SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${LIBC_FLAGS}")
 # io.cpp defines stdin/stdout/stderr, which no header of this configuration declares.
 set_source_files_properties(${CMAKE_CURRENT_LIST_DIR}/src/__support/OSUtil/baremetal/io.cpp
