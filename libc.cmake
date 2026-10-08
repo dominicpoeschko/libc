@@ -1642,6 +1642,9 @@ else()
     list(APPEND LIBC_SOURCE_FILES ${CMAKE_CURRENT_LIST_DIR}/kvasir/arm/memory_v7m.S)
 endif()
 set_source_files_properties(${LIBC_MALLOC_SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${LIBC_FLAGS}")
-# io.cpp defines stdin/stdout/stderr, which no header of this configuration declares.
-set_source_files_properties(${CMAKE_CURRENT_LIST_DIR}/src/__support/OSUtil/baremetal/io.cpp
-                            PROPERTIES COMPILE_FLAGS "${LIBC_FLAGS} -Wno-missing-variable-declarations")
+# io.cpp defines stdin/stdout/stderr, which no header of this configuration declares. clang only: g++ warns that
+# the option is "valid for C/ObjC but not for C++", and has no C++ warning of that kind to silence.
+if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
+    set_source_files_properties(${CMAKE_CURRENT_LIST_DIR}/src/__support/OSUtil/baremetal/io.cpp
+                                PROPERTIES COMPILE_FLAGS "${LIBC_FLAGS} -Wno-missing-variable-declarations")
+endif()
