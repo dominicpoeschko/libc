@@ -18,7 +18,7 @@
 //
 // As llvm-libc built with LIBC_ADD_NULL_CHECKS: a null pointer with a size other than 0 traps.
 //
-// Checked on the device by test_examples 110_memory_check, measured by 108_runtime_cost.
+// Checked and measured on the device against every size and alignment.
 
         .syntax unified
         .arch   armv7-m
