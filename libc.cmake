@@ -122,7 +122,10 @@ set(LIBC_SOURCE_FILES
     # src/err/vwarnx.cpp
     # src/err/warn.cpp
     # src/err/warnx.cpp
-    # src/errno/libc_errno.cpp
+    # errno (LIBC_ERRNO_MODE_SHARED in libc_flags): Errno::operator= and __llvm_libc_errno(), which strtoimax,
+    # strtoumax, strdup and nan/nanf write and the errno macro of include/errno.h reads. Unreferenced it costs nothing
+    # (LTO / --gc-sections drop it); without it the first caller fails to link.
+    src/errno/libc_errno.cpp
     # src/fcntl/linux/creat.cpp
     # src/fcntl/linux/fcntl.cpp
     # src/fcntl/linux/open.cpp
@@ -1184,9 +1187,9 @@ set(LIBC_SOURCE_FILES
     # src/stdlib/atoi.cpp
     # src/stdlib/atol.cpp
     # src/stdlib/atoll.cpp
-    src/stdlib/baremetal/aligned_alloc.cpp
+    # src/stdlib/baremetal/aligned_alloc.cpp: in LIBC_MALLOC_SOURCE_FILES, the heap's allocator
     # src/stdlib/baremetal/calloc.cpp
-    src/stdlib/baremetal/free.cpp
+    # src/stdlib/baremetal/free.cpp: in LIBC_MALLOC_SOURCE_FILES, the heap's allocator
     # src/stdlib/baremetal/malloc.cpp
     # src/stdlib/baremetal/realloc.cpp
     # src/stdlib/bsearch.cpp
@@ -1274,7 +1277,8 @@ set(LIBC_SOURCE_FILES
     src/string/strpbrk.cpp
     src/string/strrchr.cpp
     src/string/strsep.cpp
-    src/string/strsignal.cpp
+    # src/string/strsignal.cpp: needs __support/StringUtil/signal_to_string.cpp, which includes <signal.h> - this libc
+    # has none, and string.h does not declare strsignal
     src/string/strspn.cpp
     src/string/strstr.cpp
     src/string/strtok.cpp
@@ -1578,6 +1582,10 @@ set(LIBC_MALLOC_SOURCE_FILES
     src/stdlib/baremetal/malloc.cpp
     src/stdlib/baremetal/calloc.cpp
     src/stdlib/baremetal/realloc.cpp
+    # free and aligned_alloc belong with the allocator: their LIBC_ASSERTs end in exit.cpp / io.cpp below, and a
+    # free in an image without a heap fails as "undefined symbol: free" instead of naming write_to_stderr
+    src/stdlib/baremetal/free.cpp
+    src/stdlib/baremetal/aligned_alloc.cpp
     src/__support/OSUtil/baremetal/exit.cpp
     src/__support/OSUtil/baremetal/io.cpp
 )
