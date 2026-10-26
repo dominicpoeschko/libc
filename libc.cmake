@@ -1577,7 +1577,7 @@ set(LIBC_SOURCE_FILES
 
 # Linked only with a heap (HEAP_SIZE). The freelist heap reports a corrupted heap through write_to_stderr() and
 # internal::exit(), which the baremetal OSUtil files forward to __llvm_libc_stdio_write() and __llvm_libc_exit() -
-# StartUp.hpp provides those (a crit log line, then a breakpoint).
+# StartUp/Runtime/Libc.hpp provides those (a crit log line, then a panic with the exit status as its detail).
 set(LIBC_MALLOC_SOURCE_FILES
     src/stdlib/baremetal/malloc.cpp
     src/stdlib/baremetal/calloc.cpp
@@ -1605,16 +1605,13 @@ set(libc_flags
     -fno-stack-protector
     # freestanding and builtin-free whatever the application is: no memcpy is built out of memcpy
     -ffreestanding
-    -fno-builtin
-    -Wno-sign-conversion
-    -Wno-shadow
-    -Wno-double-promotion)
+    -fno-builtin)
 
-# gcc warns about upstream code that clang does not; not ours to fix, so silence per compiler.
+# The libc compiles with the compiler's default warnings: Kvasir's warning list is the image's own (kvasir::warnings).
 if(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
     # -fno-lto: under gcc LTO the asm-renamed C entrypoints (see src/__support/common.h) vanish
     # from the final link; compiled as plain objects they resolve.
-    list(APPEND libc_flags -Wno-strict-aliasing -Wno-cast-align -Wno-strict-overflow -fno-lto)
+    list(APPEND libc_flags -fno-lto)
 endif()
 
 list(JOIN libc_flags " " LIBC_FLAGS)
@@ -1649,9 +1646,3 @@ else()
     list(APPEND LIBC_SOURCE_FILES ${CMAKE_CURRENT_LIST_DIR}/kvasir/arm/memory_v7m.S)
 endif()
 set_source_files_properties(${LIBC_MALLOC_SOURCE_FILES} PROPERTIES COMPILE_FLAGS "${LIBC_FLAGS}")
-# io.cpp defines stdin/stdout/stderr, which no header of this configuration declares. clang only: g++ warns that
-# the option is "valid for C/ObjC but not for C++", and has no C++ warning of that kind to silence.
-if(CMAKE_CXX_COMPILER_ID STREQUAL "Clang")
-    set_source_files_properties(${CMAKE_CURRENT_LIST_DIR}/src/__support/OSUtil/baremetal/io.cpp
-                                PROPERTIES COMPILE_FLAGS "${LIBC_FLAGS} -Wno-missing-variable-declarations")
-endif()
